@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-ivory: #F7F5EF;
+    --forest-green: #21473A;
+    --muted-sage: #DCE7DC;
+    --coral-accent: #E9795C;
+    --charcoal-text: #1F2923;
+    --border-sand: #E5E0D5;
+  }
+
+  body {
+    background-color: #F7F5EF;
+    color: #1F2923;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', Times, serif;
+  }
+}
+
+/* Print Stylesheet for A4 Document Export */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 15mm 15mm;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 11pt !important;
+    line-height: 1.45 !important;
+  }
+
+  .no-print,
+  nav,
+  header,
+  footer,
+  aside,
+  button:not(.print-keep),
+  .print-hidden {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  #printable-document {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+  }
+
+  .break-inside-avoid {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .page-break-after {
+    page-break-after: always !important;
+    break-after: always !important;
+  }
+
+  /* Force table formatting to be crisp in print */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    padding: 6pt 8pt !important;
+    border-bottom: 1px solid #d1d5db !important;
+  }
+}
