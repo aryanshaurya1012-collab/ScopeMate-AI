@@ -1,5 +1,14 @@
-import React from 'react';
-import { FileText, GitCompare, FolderKanban, ShieldCheck, Plus, Sparkles } from 'lucide-react';
+import React, { useState } from 'react';
+import {
+  FileText,
+  GitCompare,
+  FolderKanban,
+  ShieldCheck,
+  Plus,
+  Menu,
+  X,
+  LayoutDashboard,
+} from 'lucide-react';
 
 export type ActiveTab = 'dashboard' | 'builder' | 'editor' | 'scope_change' | 'projects' | 'about';
 
@@ -18,164 +27,142 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNewProposal,
   onLoadSample,
 }) => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const navItems: { id: ActiveTab; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
+    { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { id: 'builder', label: 'New Proposal', icon: Plus },
+    { id: 'scope_change', label: 'Scope Change', icon: GitCompare },
+    { id: 'projects', label: 'My Projects', icon: FolderKanban },
+    { id: 'about', label: 'AI & Privacy', icon: ShieldCheck },
+  ];
+
+  const handleNavClick = (tab: ActiveTab) => {
+    if (tab === 'builder') {
+      onNewProposal();
+    } else {
+      setActiveTab(tab);
+    }
+    setMobileMenuOpen(false);
+  };
+
   return (
-    <header className="sticky top-0 z-30 border-b border-[#E5E0D5] bg-[#F7F5EF]/95 backdrop-blur-md transition-all">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
+    <header className="sticky top-0 z-30 border-b border-[#E2E8F0] bg-white/95 backdrop-blur-xs">
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:px-6">
         {/* Brand */}
-        <div className="flex items-center space-x-3">
+        <div className="flex items-center space-x-8">
           <button
-            onClick={() => setActiveTab('dashboard')}
+            onClick={() => handleNavClick('dashboard')}
             className="flex items-center space-x-2.5 text-left focus:outline-none"
           >
-            <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[#21473A] text-white shadow-sm">
-              <span className="font-editorial text-xl font-bold tracking-tight">S</span>
+            <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#0F766E] text-white">
+              <span className="text-sm font-bold tracking-tight">S</span>
             </div>
-            <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-editorial text-2xl font-bold tracking-tight text-[#21473A]">
-                  ScopeMate
-                </span>
-                <span className="hidden rounded border border-[#21473A]/20 bg-[#DCE7DC]/60 px-1.5 py-0.5 text-[10px] font-semibold text-[#21473A] sm:inline-block">
-                  Gemma 4
-                </span>
-              </div>
-              <p className="text-[11px] font-medium text-[#1F2923]/60">Freelance Scope & Quote Engine</p>
-            </div>
+            <span className="text-base font-bold tracking-tight text-[#1E293B]">
+              ScopeMate
+            </span>
           </button>
+
+          {/* Desktop Nav Links */}
+          <nav className="hidden items-center space-x-1 md:flex">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`flex items-center space-x-1.5 rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
+                    isActive
+                      ? 'bg-[#F0FDFA] text-[#0F766E]'
+                      : 'text-[#64748B] hover:bg-slate-50 hover:text-[#1E293B]'
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5" />
+                  <span>{item.label}</span>
+                  {item.id === 'projects' && savedCount > 0 && (
+                    <span className="ml-1 rounded-full bg-slate-100 px-1.5 py-0.2 text-[10px] font-semibold text-[#64748B]">
+                      {savedCount}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
         </div>
 
-        {/* Navigation Links */}
-        <nav className="hidden items-center space-x-1 md:flex">
-          <button
-            onClick={() => setActiveTab('dashboard')}
-            className={`rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeTab === 'dashboard'
-                ? 'bg-[#21473A] text-[#F7F5EF]'
-                : 'text-[#1F2923]/80 hover:bg-[#E5E0D5]/50 hover:text-[#1F2923]'
-            }`}
-          >
-            Dashboard
-          </button>
-
-          <button
-            onClick={onNewProposal}
-            className={`flex items-center space-x-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeTab === 'builder'
-                ? 'bg-[#21473A] text-[#F7F5EF]'
-                : 'text-[#1F2923]/80 hover:bg-[#E5E0D5]/50 hover:text-[#1F2923]'
-            }`}
-          >
-            <Plus className="h-4 w-4" />
-            <span>New Proposal</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('scope_change')}
-            className={`flex items-center space-x-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeTab === 'scope_change'
-                ? 'bg-[#21473A] text-[#F7F5EF]'
-                : 'text-[#1F2923]/80 hover:bg-[#E5E0D5]/50 hover:text-[#1F2923]'
-            }`}
-          >
-            <GitCompare className="h-4 w-4" />
-            <span>Scope Change</span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('projects')}
-            className={`flex items-center space-x-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeTab === 'projects'
-                ? 'bg-[#21473A] text-[#F7F5EF]'
-                : 'text-[#1F2923]/80 hover:bg-[#E5E0D5]/50 hover:text-[#1F2923]'
-            }`}
-          >
-            <FolderKanban className="h-4 w-4" />
-            <span>My Projects</span>
-            {savedCount > 0 && (
-              <span className="rounded-full bg-[#DCE7DC] px-1.5 py-0.2 text-[10px] font-semibold text-[#21473A]">
-                {savedCount}
-              </span>
-            )}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('about')}
-            className={`flex items-center space-x-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-              activeTab === 'about'
-                ? 'bg-[#21473A] text-[#F7F5EF]'
-                : 'text-[#1F2923]/80 hover:bg-[#E5E0D5]/50 hover:text-[#1F2923]'
-            }`}
-          >
-            <ShieldCheck className="h-4 w-4" />
-            <span>Open AI & Privacy</span>
-          </button>
-        </nav>
-
-        {/* Right CTA */}
-        <div className="flex items-center space-x-2">
+        {/* Right Action Area */}
+        <div className="flex items-center space-x-3">
           <button
             onClick={onLoadSample}
-            className="flex items-center space-x-1.5 rounded-md border border-[#21473A]/25 bg-white px-3 py-1.5 text-xs font-semibold text-[#21473A] shadow-xs hover:bg-[#DCE7DC]/40"
-            title="Load sample AeroPay project"
+            className="hidden text-xs font-medium text-[#64748B] hover:text-[#0F766E] sm:inline-block"
           >
-            <Sparkles className="h-3.5 w-3.5 text-[#E9795C]" />
-            <span className="hidden sm:inline">Try Sample Project</span>
-            <span className="sm:hidden">Sample</span>
+            Try sample
           </button>
 
           <button
             onClick={onNewProposal}
-            className="flex items-center space-x-1.5 rounded-md bg-[#21473A] px-3.5 py-1.5 text-xs font-semibold text-[#F7F5EF] shadow-xs hover:bg-[#18362C]"
+            className="flex items-center space-x-1.5 rounded-md bg-[#0F766E] px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs transition hover:bg-[#115E59]"
           >
             <Plus className="h-3.5 w-3.5" />
-            <span>Create Scope</span>
+            <span>Create Proposal</span>
+          </button>
+
+          {/* Mobile hamburger toggle */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="rounded-md p-1.5 text-[#64748B] hover:bg-slate-100 md:hidden"
+            aria-label="Toggle navigation"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5 text-[#1E293B]" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Nav strip */}
-      <div className="flex overflow-x-auto border-t border-[#E5E0D5] px-2 py-1.5 md:hidden">
-        <button
-          onClick={() => setActiveTab('dashboard')}
-          className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium ${
-            activeTab === 'dashboard' ? 'bg-[#21473A] text-white' : 'text-[#1F2923]/80'
-          }`}
-        >
-          Dashboard
-        </button>
-        <button
-          onClick={onNewProposal}
-          className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium ${
-            activeTab === 'builder' ? 'bg-[#21473A] text-white' : 'text-[#1F2923]/80'
-          }`}
-        >
-          New Scope
-        </button>
-        <button
-          onClick={() => setActiveTab('scope_change')}
-          className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium ${
-            activeTab === 'scope_change' ? 'bg-[#21473A] text-white' : 'text-[#1F2923]/80'
-          }`}
-        >
-          Scope Change
-        </button>
-        <button
-          onClick={() => setActiveTab('projects')}
-          className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium ${
-            activeTab === 'projects' ? 'bg-[#21473A] text-white' : 'text-[#1F2923]/80'
-          }`}
-        >
-          Projects ({savedCount})
-        </button>
-        <button
-          onClick={() => setActiveTab('about')}
-          className={`shrink-0 rounded px-2.5 py-1 text-xs font-medium ${
-            activeTab === 'about' ? 'bg-[#21473A] text-white' : 'text-[#1F2923]/80'
-          }`}
-        >
-          Privacy & AI
-        </button>
-      </div>
+      {/* Mobile Drawer Menu */}
+      {mobileMenuOpen && (
+        <div className="border-t border-[#E2E8F0] bg-white px-4 py-3 md:hidden">
+          <div className="space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = activeTab === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleNavClick(item.id)}
+                  className={`flex w-full items-center justify-between rounded-md px-3 py-2 text-xs font-medium transition ${
+                    isActive
+                      ? 'bg-[#F0FDFA] text-[#0F766E]'
+                      : 'text-[#64748B] hover:bg-slate-50 hover:text-[#1E293B]'
+                  }`}
+                >
+                  <div className="flex items-center space-x-2">
+                    <Icon className="h-4 w-4" />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.id === 'projects' && savedCount > 0 && (
+                    <span className="rounded-full bg-slate-100 px-1.5 py-0.2 text-[10px] font-semibold text-[#64748B]">
+                      {savedCount}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="mt-3 border-t border-[#E2E8F0] pt-2">
+            <button
+              onClick={() => {
+                onLoadSample();
+                setMobileMenuOpen(false);
+              }}
+              className="w-full text-left px-3 py-1.5 text-xs font-medium text-[#64748B] hover:text-[#0F766E]"
+            >
+              Try sample project
+            </button>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

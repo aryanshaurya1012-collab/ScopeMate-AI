@@ -2,25 +2,18 @@ import React, { useState } from 'react';
 import {
   SavedProject,
   ScopeChangeAnalysis,
-  ScopeChangeItem,
   ScopeClassification,
-  QuoteLineItem,
 } from '../types/index.ts';
 import { formatCurrency } from '../utils/calculator.ts';
 import {
   GitCompare,
-  Sparkles,
   CheckCircle2,
   AlertTriangle,
   HelpCircle,
   Copy,
   Check,
   Plus,
-  ArrowRight,
-  ShieldCheck,
-  MessageSquare,
   Clock,
-  Send,
   RefreshCw,
 } from 'lucide-react';
 
@@ -169,21 +162,17 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
     setTimeout(() => setAddedItemsNotice(false), 4000);
   };
 
-  const handleApplyPresetMessage = (msg: string) => {
-    setClientMessage(msg);
-  };
-
   if (!currentProject) {
     return (
       <div className="mx-auto max-w-4xl px-4 py-12 text-center">
-        <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#DCE7DC]">
-          <GitCompare className="h-6 w-6 text-[#21473A]" />
+        <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-[#64748B]">
+          <GitCompare className="h-5 w-5" />
         </div>
-        <h2 className="mt-4 font-editorial text-2xl font-bold text-[#21473A]">
-          No Active Project to Compare Against
+        <h2 className="mt-4 text-base font-bold text-[#1E293B]">
+          No Active Project Selected
         </h2>
-        <p className="mt-2 text-sm text-[#1F2923]/70">
-          To run a scope change audit, you need an agreed project scope. Create a new proposal or explore the AeroPay sample project first.
+        <p className="mt-1 text-xs text-[#64748B]">
+          To run a scope change audit, select an existing proposal or create a new one first.
         </p>
       </div>
     );
@@ -192,24 +181,17 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6">
       {/* Header */}
-      <div className="border-b border-[#E5E0D5] pb-5">
-        <div className="flex items-center space-x-2 text-xs font-semibold text-[#21473A]">
-          <span>SIGNATURE FEATURE</span>
-          <span>•</span>
-          <span>SCOPE CHANGE ANALYZER</span>
-        </div>
-        <h1 className="mt-2 font-editorial text-3xl font-bold text-[#21473A] sm:text-4xl">
-          Evaluate New Requests Against Approved Scope
+      <div className="border-b border-[#E2E8F0] pb-5">
+        <h1 className="text-2xl font-bold tracking-tight text-[#1E293B]">
+          Scope Change Analyzer
         </h1>
-        <p className="mt-2 text-sm text-[#1F2923]/70 sm:text-base">
-          Client asked for “just a quick addition”? Paste their email or Slack message. Gemma 4 cross-references
-          it against your original deliverables and exclusions to classify what’s included, what’s extra,
-          and draft a polite, diplomatic response.
+        <p className="mt-1 text-sm text-[#64748B]">
+          Evaluate new client messages against approved baseline deliverables and exclusions to classify what’s included, what’s extra, and draft a response.
         </p>
 
         {/* Project Selector Bar */}
-        <div className="mt-5 flex flex-wrap items-center gap-3">
-          <span className="text-xs font-semibold text-[#1F2923]">Compare against Project:</span>
+        <div className="mt-4 flex flex-wrap items-center gap-3">
+          <span className="text-xs font-semibold text-[#1E293B]">Project Baseline:</span>
           <select
             value={currentProject.id}
             onChange={(e) => {
@@ -224,7 +206,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                 }
               }
             }}
-            className="rounded-md border border-[#E5E0D5] bg-white px-3 py-1.5 text-xs font-medium text-[#21473A] shadow-2xs focus:border-[#21473A] focus:outline-none"
+            className="rounded-md border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] shadow-2xs focus:border-[#0F766E] focus:outline-none"
           >
             {projects.map((p) => (
               <option key={p.id} value={p.id}>
@@ -233,44 +215,33 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
             ))}
           </select>
 
-          <span className="text-xs text-[#1F2923]/50">
+          <span className="text-xs text-[#64748B]">
             ({currentProject.proposal.deliverables?.length || 0} Deliverables,{' '}
-            {currentProject.proposal.explicitExclusions?.length || 0} Exclusions in active baseline)
+            {currentProject.proposal.explicitExclusions?.length || 0} Exclusions in active scope)
           </span>
         </div>
       </div>
 
       {/* Main Grid: Input Form vs Output Audit */}
-      <div className="mt-6 space-y-8">
+      <div className="mt-6 space-y-6">
         {/* Input Box */}
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs sm:p-6">
+        <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
           <div className="flex items-center justify-between">
-            <h2 className="font-editorial text-lg font-bold text-[#21473A]">
-              1. Paste Client's Request
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+              1. Client Message or Change Request
             </h2>
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] text-[#1F2923]/60">Preset Scenarios:</span>
+              <span className="text-[11px] text-[#64748B]">Example:</span>
               <button
                 type="button"
                 onClick={() =>
-                  handleApplyPresetMessage(
+                  setClientMessage(
                     "Hey! Can we quickly add Dark Mode support across the portal, and also hook up an automated daily email digest to send reports every morning?"
                   )
                 }
-                className="rounded bg-[#F7F5EF] px-2 py-0.5 text-[11px] font-medium text-[#21473A] hover:bg-[#DCE7DC]"
+                className="rounded bg-slate-50 border border-[#E2E8F0] px-2 py-0.5 text-[11px] font-medium text-[#1E293B] hover:bg-slate-100"
               >
                 Dark Mode & Email Digest
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  handleApplyPresetMessage(
-                    "Could we fix the alignment on the invoice download button, and also could you build a complete multi-tenant role permission system with 5 different admin levels before next Wednesday?"
-                  )
-                }
-                className="rounded bg-[#F7F5EF] px-2 py-0.5 text-[11px] font-medium text-[#21473A] hover:bg-[#DCE7DC]"
-              >
-                Minor Tweak vs Multi-Tenant Roles
               </button>
             </div>
           </div>
@@ -280,7 +251,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
             value={clientMessage}
             onChange={(e) => setClientMessage(e.target.value)}
             placeholder="Paste the email, Slack message, or meeting transcript where the client requested extra work..."
-            className="mt-3 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 p-3 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+            className="mt-3 w-full rounded-md border border-[#E2E8F0] bg-white p-3 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
           />
 
           {analysisError && (
@@ -291,15 +262,15 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
           )}
 
           <div className="mt-4 flex items-center justify-between">
-            <span className="text-xs text-[#1F2923]/60">
-              Analyzed with Google Gemma 4 open-weight model
+            <span className="text-xs text-[#64748B]">
+              Analyzed with Gemma 4 open-weight model
             </span>
 
             <button
               type="button"
               onClick={handleRunAnalysis}
               disabled={isAnalyzing}
-              className="flex items-center space-x-2 rounded-lg bg-[#21473A] px-5 py-2 text-xs font-semibold text-white shadow-xs hover:bg-[#18362C] disabled:opacity-50"
+              className="flex items-center space-x-2 rounded-lg bg-[#0F766E] px-4 py-2 text-xs font-semibold text-white shadow-xs hover:bg-[#115E59] disabled:opacity-50"
             >
               {isAnalyzing ? (
                 <>
@@ -308,7 +279,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                 </>
               ) : (
                 <>
-                  <Sparkles className="h-3.5 w-3.5 text-[#E9795C]" />
+                  <GitCompare className="h-3.5 w-3.5" />
                   <span>Audit Scope Change</span>
                 </>
               )}
@@ -320,107 +291,94 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
         {currentAnalysis && (
           <div className="space-y-6">
             {/* Summary Banner */}
-            <div className="rounded-xl border border-[#21473A]/20 bg-[#F7F5EF] p-5 shadow-2xs">
+            <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <div className="flex items-center space-x-2">
-                  <span className="rounded bg-[#21473A] px-2 py-0.5 text-[10px] font-bold tracking-wider text-white uppercase">
-                    Scope Audit Completed
-                  </span>
-                  <span className="font-mono text-xs text-[#1F2923]/60">
-                    {new Date(currentAnalysis.createdAt).toLocaleTimeString()}
-                  </span>
-                </div>
-                {currentAnalysis.modelUsed && (
-                  <span className="rounded border border-[#21473A]/20 bg-white px-2 py-0.5 text-[11px] font-medium text-[#21473A]">
-                    {currentAnalysis.modelUsed}
-                  </span>
-                )}
+                <span className="rounded bg-[#F0FDFA] px-2 py-0.5 text-[11px] font-semibold text-[#0F766E]">
+                  Audit Summary
+                </span>
+                <span className="font-mono text-xs text-[#64748B]">
+                  {new Date(currentAnalysis.createdAt).toLocaleTimeString()}
+                </span>
               </div>
 
-              <h3 className="mt-3 font-editorial text-xl font-bold text-[#21473A]">
+              <h3 className="mt-2 text-sm font-bold text-[#1E293B]">
                 {currentAnalysis.requestSummary}
               </h3>
-              <p className="mt-1 text-xs text-[#1F2923]/75">
+              <p className="mt-1 text-xs text-[#64748B]">
                 {currentAnalysis.changeRequestSummary}
               </p>
             </div>
 
             {/* Categorized Item Breakdown */}
-            <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs sm:p-6">
+            <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
               <div className="flex items-center justify-between">
-                <h3 className="font-editorial text-lg font-bold text-[#21473A]">
-                  2. Item-by-Item Scope Classification
+                <h3 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+                  2. Scope Classification
                 </h3>
-                <span className="text-xs text-[#1F2923]/60">
-                  Click badges to override classification
+                <span className="text-[11px] text-[#64748B]">
+                  Override classification if needed
                 </span>
               </div>
 
-              <div className="mt-4 space-y-4">
+              <div className="mt-4 space-y-3">
                 {currentAnalysis.items.map((item) => {
                   const effectiveClass = item.userOverride || item.classification;
                   return (
                     <div
                       key={item.id}
-                      className={`rounded-lg border p-4 transition ${
-                        effectiveClass === 'likely_included'
-                          ? 'border-emerald-200 bg-emerald-50/30'
-                          : effectiveClass === 'potential_scope_change'
-                          ? 'border-[#E9795C]/40 bg-[#E9795C]/5'
-                          : 'border-amber-200 bg-amber-50/30'
-                      }`}
+                      className="rounded-lg border border-[#E2E8F0] bg-white p-4"
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                         <div className="flex items-center space-x-2">
                           {effectiveClass === 'likely_included' && (
-                            <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0" />
+                            <span className="rounded bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 border border-emerald-200">
+                              Likely Included
+                            </span>
                           )}
                           {effectiveClass === 'potential_scope_change' && (
-                            <AlertTriangle className="h-4 w-4 text-[#E9795C] shrink-0" />
+                            <span className="rounded bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700 border border-amber-200">
+                              Scope Change
+                            </span>
                           )}
                           {effectiveClass === 'needs_clarification' && (
-                            <HelpCircle className="h-4 w-4 text-amber-600 shrink-0" />
+                            <span className="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-semibold text-slate-700 border border-slate-200">
+                              Needs Clarification
+                            </span>
                           )}
-                          <h4 className="font-semibold text-sm text-[#21473A]">{item.title}</h4>
+                          <h4 className="font-semibold text-xs text-[#1E293B]">{item.title}</h4>
                         </div>
 
-                        {/* Interactive override selector */}
-                        <div className="flex items-center space-x-1.5 self-start sm:self-auto">
+                        {/* Override buttons */}
+                        <div className="flex items-center space-x-1 self-start sm:self-auto">
                           <button
                             type="button"
-                            onClick={() =>
-                              handleOverrideClassification(item.id, 'likely_included')
-                            }
-                            className={`rounded px-2 py-0.5 text-[10px] font-bold transition ${
+                            onClick={() => handleOverrideClassification(item.id, 'likely_included')}
+                            className={`rounded px-2 py-0.5 text-[10px] font-medium transition ${
                               effectiveClass === 'likely_included'
-                                ? 'bg-emerald-600 text-white'
-                                : 'bg-white border border-emerald-300 text-emerald-700 hover:bg-emerald-50'
+                                ? 'bg-emerald-700 text-white'
+                                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
                             }`}
                           >
-                            Likely Included
+                            Included
                           </button>
                           <button
                             type="button"
-                            onClick={() =>
-                              handleOverrideClassification(item.id, 'potential_scope_change')
-                            }
-                            className={`rounded px-2 py-0.5 text-[10px] font-bold transition ${
+                            onClick={() => handleOverrideClassification(item.id, 'potential_scope_change')}
+                            className={`rounded px-2 py-0.5 text-[10px] font-medium transition ${
                               effectiveClass === 'potential_scope_change'
-                                ? 'bg-[#E9795C] text-white'
-                                : 'bg-white border border-[#E9795C]/40 text-[#E9795C] hover:bg-red-50'
+                                ? 'bg-amber-700 text-white'
+                                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
                             }`}
                           >
                             Scope Change
                           </button>
                           <button
                             type="button"
-                            onClick={() =>
-                              handleOverrideClassification(item.id, 'needs_clarification')
-                            }
-                            className={`rounded px-2 py-0.5 text-[10px] font-bold transition ${
+                            onClick={() => handleOverrideClassification(item.id, 'needs_clarification')}
+                            className={`rounded px-2 py-0.5 text-[10px] font-medium transition ${
                               effectiveClass === 'needs_clarification'
-                                ? 'bg-amber-600 text-white'
-                                : 'bg-white border border-amber-300 text-amber-700 hover:bg-amber-50'
+                                ? 'bg-slate-700 text-white'
+                                : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
                             }`}
                           >
                             Clarification
@@ -428,26 +386,19 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                         </div>
                       </div>
 
-                      {/* Reference and Reasoning */}
-                      <div className="mt-3 text-xs space-y-1.5">
-                        <div className="flex items-baseline space-x-1 text-[#1F2923]/60">
-                          <span className="font-semibold text-[#21473A]">Referenced Baseline:</span>
-                          <span>{item.originalReference}</span>
-                        </div>
-                        <p className="text-[#1F2923]/80 leading-relaxed">{item.reasoning}</p>
+                      {/* Reasoning */}
+                      <div className="mt-2.5 text-xs space-y-1">
+                        <p className="text-[11px] text-[#64748B]">
+                          <strong className="text-[#1E293B]">Referenced Baseline:</strong> {item.originalReference}
+                        </p>
+                        <p className="text-[#1E293B] text-xs leading-relaxed">{item.reasoning}</p>
 
-                        <div className="mt-2 flex flex-wrap items-center gap-4 text-[11px] text-[#1F2923]/70 pt-1 border-t border-[#E5E0D5]/60">
+                        <div className="mt-2 flex flex-wrap items-center gap-4 text-[11px] text-[#64748B] pt-2 border-t border-slate-100">
                           {item.estimatedHoursImpact !== undefined && (
-                            <div className="flex items-center space-x-1 font-mono">
-                              <Clock className="h-3 w-3 text-[#21473A]" />
-                              <span>Effort Impact: ~{item.estimatedHoursImpact} hrs</span>
-                            </div>
+                            <span className="font-mono">Effort Impact: ~{item.estimatedHoursImpact} hrs</span>
                           )}
                           {item.estimatedTimelineImpact && (
-                            <div className="flex items-center space-x-1">
-                              <span className="font-semibold text-[#21473A]">Timeline Impact:</span>
-                              <span>{item.estimatedTimelineImpact}</span>
-                            </div>
+                            <span>Timeline Impact: {item.estimatedTimelineImpact}</span>
                           )}
                         </div>
                       </div>
@@ -456,14 +407,14 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                 })}
               </div>
 
-              {/* Clarification questions to ask */}
+              {/* Clarification questions */}
               {currentAnalysis.clarificationQuestionsToAsk?.length > 0 && (
-                <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50/40 p-4 text-xs">
+                <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50/50 p-3.5 text-xs">
                   <h4 className="font-semibold text-amber-900 flex items-center space-x-1.5">
                     <HelpCircle className="h-3.5 w-3.5 text-amber-700" />
-                    <span>Questions Freelancer Should Ask Before Committing:</span>
+                    <span>Clarification Questions to Ask Client:</span>
                   </h4>
-                  <ul className="mt-2 list-disc list-inside space-y-1 text-amber-950/80">
+                  <ul className="mt-2 list-disc list-inside space-y-1 text-amber-950/80 text-[11px]">
                     {currentAnalysis.clarificationQuestionsToAsk.map((q, i) => (
                       <li key={i}>{q}</li>
                     ))}
@@ -475,24 +426,24 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
             {/* Suggested Extra Line Items */}
             {currentAnalysis.suggestedExtraLineItems &&
               currentAnalysis.suggestedExtraLineItems.length > 0 && (
-                <div className="rounded-xl border border-[#21473A]/20 bg-white p-5 shadow-2xs sm:p-6">
+                <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                     <div>
-                      <h3 className="font-editorial text-lg font-bold text-[#21473A]">
+                      <h3 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
                         3. Suggested Additional Line Items
                       </h3>
-                      <p className="text-xs text-[#1F2923]/70">
-                        Priced extras you can attach directly to your project's quote calculator
+                      <p className="text-xs text-[#64748B]">
+                        Attach priced extras directly to your project's quote calculator
                       </p>
                     </div>
 
                     <button
                       type="button"
                       onClick={handleAddExtraItemsToQuote}
-                      className="flex items-center space-x-1.5 rounded-lg bg-[#21473A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#18362C]"
+                      className="flex items-center space-x-1.5 rounded-lg bg-[#0F766E] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[#115E59]"
                     >
                       <Plus className="h-3.5 w-3.5" />
-                      <span>Add Extra Items to Project Quote</span>
+                      <span>Add Extra Items to Quote</span>
                     </button>
                   </div>
 
@@ -500,7 +451,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                     <div className="mt-3 flex items-center justify-between rounded-md bg-emerald-50 px-3 py-2 text-xs text-emerald-800">
                       <div className="flex items-center space-x-1.5">
                         <Check className="h-4 w-4 text-emerald-600" />
-                        <span>Extra items added to quote! Open Quote Calculator to view recalculations.</span>
+                        <span>Extra line items added to project quote!</span>
                       </div>
                       <button
                         onClick={() => onOpenQuoteEditor(currentProject)}
@@ -511,16 +462,16 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                     </div>
                   )}
 
-                  <div className="mt-4 divide-y divide-[#E5E0D5] text-xs">
+                  <div className="mt-3 divide-y divide-[#E2E8F0] text-xs">
                     {currentAnalysis.suggestedExtraLineItems.map((extra, idx) => (
-                      <div key={idx} className="py-2.5 flex items-center justify-between">
+                      <div key={idx} className="py-2 flex items-center justify-between">
                         <div>
-                          <span className="font-semibold text-[#21473A]">{extra.title}</span>
-                          <p className="text-[11px] text-[#1F2923]/60">{extra.description}</p>
+                          <span className="font-semibold text-[#1E293B]">{extra.title}</span>
+                          <p className="text-[11px] text-[#64748B]">{extra.description}</p>
                         </div>
                         <div className="text-right font-mono">
-                          <span className="text-[#1F2923]/70">{extra.quantity} hrs × {extra.unitRate} = </span>
-                          <span className="font-bold text-[#21473A]">
+                          <span className="text-[#64748B]">{extra.quantity} hrs × {extra.unitRate} = </span>
+                          <span className="font-bold text-[#1E293B]">
                             {formatCurrency(extra.quantity * extra.unitRate, currentProject.quoteConfig.currency)}
                           </span>
                         </div>
@@ -530,22 +481,22 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                 </div>
               )}
 
-            {/* Diplomatic Client Email Draft */}
-            <div className="rounded-xl border border-[#21473A]/25 bg-white p-5 shadow-2xs sm:p-6">
+            {/* Client Response Email Draft */}
+            <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-editorial text-lg font-bold text-[#21473A]">
-                    4. Professional Client Response Message Draft
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+                    4. Professional Client Response Draft
                   </h3>
-                  <p className="text-xs text-[#1F2923]/70">
-                    Diplomatic, respectful, and firm response protecting boundaries and offering clear options
+                  <p className="text-xs text-[#64748B]">
+                    Diplomatic message explaining scope boundaries and clear options
                   </p>
                 </div>
 
                 <button
                   type="button"
                   onClick={handleCopyDraft}
-                  className="flex items-center space-x-1.5 rounded-md border border-[#21473A]/25 bg-white px-3 py-1.5 text-xs font-semibold text-[#21473A] hover:bg-[#DCE7DC]/40"
+                  className="flex items-center space-x-1.5 rounded-md border border-[#E2E8F0] bg-white px-3 py-1.5 text-xs font-semibold text-[#1E293B] hover:bg-slate-50"
                 >
                   {copiedDraft ? (
                     <>
@@ -554,7 +505,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                     </>
                   ) : (
                     <>
-                      <Copy className="h-3.5 w-3.5" />
+                      <Copy className="h-3.5 w-3.5 text-[#64748B]" />
                       <span>Copy Message</span>
                     </>
                   )}
@@ -562,7 +513,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
               </div>
 
               <textarea
-                rows={9}
+                rows={8}
                 value={currentAnalysis.clientMessageDraft}
                 onChange={(e) => {
                   const updated: ScopeChangeAnalysis = {
@@ -577,7 +528,7 @@ export const ScopeChangeAnalyzer: React.FC<ScopeChangeAnalyzerProps> = ({
                     onUpdateProject({ ...currentProject, scopeAnalyses: nextAnalyses });
                   }
                 }}
-                className="mt-3 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/30 p-3 font-sans text-xs leading-relaxed text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-3 w-full rounded-md border border-[#E2E8F0] bg-slate-50 p-3 text-xs leading-relaxed text-[#1E293B] focus:border-[#0F766E] focus:bg-white focus:outline-none"
               />
             </div>
           </div>

@@ -210,10 +210,6 @@ RETURN A JSON OBJECT WITH THE FOLLOWING STRUCTURE:
     const response = await ai.models.generateContent({
       model: GEMMA_MODEL,
       contents: prompt,
-      config: {
-        responseMimeType: 'application/json',
-        temperature: 0.2,
-      },
     });
 
     const parsed = parseJsonSafely(response.text || '{}');
@@ -338,10 +334,6 @@ RETURN PURELY VALID JSON WITH THIS STRUCTURE:
     const response = await ai.models.generateContent({
       model: GEMMA_MODEL,
       contents: prompt,
-      config: {
-        responseMimeType: 'application/json',
-        temperature: 0.2,
-      },
     });
 
     const parsed = parseJsonSafely(response.text || '{}');
@@ -414,10 +406,6 @@ RETURN PURELY VALID JSON:
     const response = await ai.models.generateContent({
       model: GEMMA_MODEL,
       contents: prompt,
-      config: {
-        responseMimeType: 'application/json',
-        temperature: 0.3,
-      },
     });
 
     const parsed = parseJsonSafely(response.text || '{}');

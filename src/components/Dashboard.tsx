@@ -5,13 +5,11 @@ import {
   FileText,
   GitCompare,
   Plus,
-  Sparkles,
   ArrowRight,
-  ShieldAlert,
+  ShieldCheck,
   Calculator,
-  CheckCircle2,
   Trash2,
-  ExternalLink,
+  Sparkles,
 } from 'lucide-react';
 
 interface DashboardProps {
@@ -31,235 +29,233 @@ export const Dashboard: React.FC<DashboardProps> = ({
   onDeleteProject,
   onLoadSample,
 }) => {
-  const totalScopeAnalyses = projects.reduce(
-    (acc, p) => acc + (p.scopeAnalyses?.length || 0),
-    0
-  );
-
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12">
-      {/* Editorial Hero */}
-      <div className="relative overflow-hidden rounded-2xl border border-[#21473A]/15 bg-linear-to-b from-[#ECE7DC] to-[#F7F5EF] p-6 shadow-xs sm:p-10">
-        <div className="max-w-3xl">
-          <div className="mb-3 inline-flex items-center space-x-2 rounded-full border border-[#21473A]/20 bg-[#DCE7DC]/70 px-3 py-1 text-xs font-semibold text-[#21473A]">
-            <Sparkles className="h-3.5 w-3.5 text-[#E9795C]" />
-            <span>Open-Weight AI • Gemma 4 Model Integration</span>
+    <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
+      {/* Compact Introduction Section */}
+      <div className="rounded-xl border border-[#E2E8F0] bg-white p-6 shadow-xs sm:p-8">
+        <div className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
+          <div className="max-w-2xl">
+            <h1 className="text-2xl font-bold tracking-tight text-[#1E293B] sm:text-3xl">
+              Turn client briefs into clear scopes, quotes & change defense.
+            </h1>
+            <p className="mt-2 text-sm text-[#64748B] sm:text-base">
+              ScopeMate helps independent freelancers define explicit deliverables, establish contractual exclusions,
+              calculate deterministic quotes, and diplomatically push back on out-of-scope requests.
+            </p>
           </div>
 
-          <h1 className="font-editorial text-3xl font-bold tracking-tight text-[#21473A] sm:text-5xl sm:leading-[1.15]">
-            Turn vague client briefs into airtight scopes, deterministic quotes & change defense.
-          </h1>
-
-          <p className="mt-4 text-base text-[#1F2923]/80 sm:text-lg sm:leading-relaxed">
-            ScopeMate protects freelance web developers, designers, and creators from scope creep.
-            Translate messy emails into professional proposals with explicit exclusions, deterministic
-            pricing calculations, and instant AI audits whenever clients ask for “just one more thing.”
-          </p>
-
-          <div className="mt-6 flex flex-wrap items-center gap-3">
+          <div className="flex shrink-0 flex-wrap items-center gap-3">
             <button
               onClick={onNewProposal}
-              className="flex items-center space-x-2 rounded-lg bg-[#21473A] px-5 py-3 text-sm font-semibold text-white shadow-xs transition hover:bg-[#18362C]"
+              className="flex items-center space-x-2 rounded-lg bg-[#0F766E] px-4 py-2.5 text-xs font-semibold text-white shadow-xs transition hover:bg-[#115E59]"
             >
               <Plus className="h-4 w-4" />
-              <span>Draft New Client Scope</span>
+              <span>Create Proposal</span>
             </button>
 
             <button
               onClick={onLoadSample}
-              className="flex items-center space-x-2 rounded-lg border border-[#21473A]/30 bg-white px-5 py-3 text-sm font-semibold text-[#21473A] shadow-xs transition hover:bg-[#DCE7DC]/40"
+              className="rounded-lg border border-[#E2E8F0] bg-white px-3.5 py-2.5 text-xs font-semibold text-[#1E293B] transition hover:bg-slate-50"
             >
-              <Sparkles className="h-4 w-4 text-[#E9795C]" />
-              <span>Explore Sample Project</span>
+              Try sample project
             </button>
           </div>
         </div>
 
-        {/* Feature pillars */}
-        <div className="mt-10 grid grid-cols-1 gap-4 border-t border-[#E5E0D5] pt-6 sm:grid-cols-3">
-          <div className="flex items-start space-x-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#21473A]/10 text-[#21473A]">
-              <ShieldAlert className="h-4 w-4 text-[#E9795C]" />
+        {/* 3 Core Pillars in Compact Strip */}
+        <div className="mt-6 grid grid-cols-1 gap-3 border-t border-[#E2E8F0] pt-6 sm:grid-cols-3">
+          <div className="flex items-start space-x-2.5">
+            <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-[#F0FDFA] text-[#0F766E]">
+              <ShieldCheck className="h-3.5 w-3.5" />
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-[#21473A]">Airtight Exclusions</h4>
-              <p className="text-xs text-[#1F2923]/70">
-                Gemma 4 defines explicit out-of-scope boundaries so clients can never claim it was “assumed.”
+              <p className="text-xs font-semibold text-[#1E293B]">Explicit Exclusions</p>
+              <p className="text-[11px] text-[#64748B]">
+                Define clear boundaries so clients cannot claim assumptions were included.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start space-x-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#21473A]/10 text-[#21473A]">
-              <Calculator className="h-4 w-4 text-[#21473A]" />
+          <div className="flex items-start space-x-2.5">
+            <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-[#F0FDFA] text-[#0F766E]">
+              <Calculator className="h-3.5 w-3.5" />
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-[#21473A]">Deterministic Quote Math</h4>
-              <p className="text-xs text-[#1F2923]/70">
+              <p className="text-xs font-semibold text-[#1E293B]">Deterministic Quote Math</p>
+              <p className="text-[11px] text-[#64748B]">
                 Line items, contingency buffer, and discounts calculated purely by TypeScript arithmetic.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start space-x-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-[#21473A]/10 text-[#21473A]">
-              <GitCompare className="h-4 w-4 text-[#21473A]" />
+          <div className="flex items-start space-x-2.5">
+            <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-sm bg-[#F0FDFA] text-[#0F766E]">
+              <GitCompare className="h-3.5 w-3.5" />
             </div>
             <div>
-              <h4 className="text-sm font-semibold text-[#21473A]">Scope Change Analyzer</h4>
-              <p className="text-xs text-[#1F2923]/70">
-                Paste client change messages to classify scope impact and generate diplomatic email drafts.
+              <p className="text-xs font-semibold text-[#1E293B]">Scope Change Analyzer</p>
+              <p className="text-[11px] text-[#64748B]">
+                Classify new requests against approved scope and draft polite client responses.
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Quick Stats */}
-      <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-medium text-[#1F2923]/60">Saved Projects</span>
-          <p className="mt-1 font-editorial text-2xl font-bold text-[#21473A]">{projects.length}</p>
-        </div>
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-medium text-[#1F2923]/60">Scope Change Audits</span>
-          <p className="mt-1 font-editorial text-2xl font-bold text-[#21473A]">{totalScopeAnalyses}</p>
-        </div>
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-medium text-[#1F2923]/60">Configured AI Model</span>
-          <p className="mt-1 font-editorial text-lg font-bold text-[#21473A] truncate">gemma-4-26b-a4b-it</p>
-        </div>
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-4 shadow-2xs">
-          <span className="text-xs font-medium text-[#1F2923]/60">Data Persistence</span>
-          <p className="mt-1 font-editorial text-lg font-bold text-[#21473A]">Local / Private</p>
-        </div>
-      </div>
-
-      {/* Projects Section */}
-      <div className="mt-10">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="font-editorial text-2xl font-bold text-[#21473A]">Your Scopes & Proposals</h2>
-            <p className="text-sm text-[#1F2923]/70">Manage saved client agreements and analyze mid-project change requests</p>
-          </div>
-
-          <button
-            onClick={onNewProposal}
-            className="flex items-center space-x-1.5 text-xs font-semibold text-[#21473A] hover:underline"
-          >
-            <span>Create another</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </button>
-        </div>
-
-        {projects.length === 0 ? (
-          <div className="mt-6 rounded-xl border border-dashed border-[#21473A]/25 bg-white/70 p-8 text-center sm:p-12">
-            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#DCE7DC]">
-              <FileText className="h-6 w-6 text-[#21473A]" />
+      {/* Main Content Area */}
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
+        {/* Left 2 Cols: Recent Projects */}
+        <div className="lg:col-span-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-base font-bold text-[#1E293B]">Recent Scopes & Proposals</h2>
+              <p className="text-xs text-[#64748B]">Your stored project baselines ({projects.length})</p>
             </div>
-            <h3 className="mt-4 font-editorial text-xl font-bold text-[#21473A]">No proposals saved yet</h3>
-            <p className="mx-auto mt-2 max-w-md text-sm text-[#1F2923]/70">
-              Create your first project scope from a client brief, or explore the sample AeroPay project to see how ScopeMate operates.
-            </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
+
+            {projects.length > 0 && (
               <button
                 onClick={onNewProposal}
-                className="rounded-lg bg-[#21473A] px-4 py-2 text-xs font-semibold text-white hover:bg-[#18362C]"
+                className="text-xs font-semibold text-[#0F766E] hover:underline"
               >
-                Create New Proposal
+                + New proposal
               </button>
-              <button
-                onClick={onLoadSample}
-                className="rounded-lg border border-[#21473A]/30 bg-white px-4 py-2 text-xs font-semibold text-[#21473A] hover:bg-[#DCE7DC]/40"
-              >
-                Load Sample Project
-              </button>
-            </div>
+            )}
           </div>
-        ) : (
-          <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map((proj) => {
-              const totals = calculateQuoteTotals(proj.quoteItems || [], proj.quoteConfig);
-              return (
-                <div
-                  key={proj.id}
-                  className="group relative flex flex-col justify-between rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs transition hover:border-[#21473A]/40 hover:shadow-xs"
+
+          {projects.length === 0 ? (
+            <div className="mt-4 rounded-xl border border-dashed border-[#CBD5E1] bg-white p-8 text-center">
+              <div className="mx-auto flex h-10 w-10 items-center justify-center rounded-full bg-slate-100 text-[#64748B]">
+                <FileText className="h-5 w-5" />
+              </div>
+              <h3 className="mt-3 text-sm font-semibold text-[#1E293B]">No proposals created yet</h3>
+              <p className="mx-auto mt-1 max-w-sm text-xs text-[#64748B]">
+                Turn your first client brief into a structured scope, or load the sample project to see how ScopeMate works.
+              </p>
+              <div className="mt-5 flex justify-center gap-2">
+                <button
+                  onClick={onNewProposal}
+                  className="rounded-lg bg-[#0F766E] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[#115E59]"
                 >
-                  <div>
-                    <div className="flex items-start justify-between">
-                      <div className="flex flex-wrap items-center gap-1.5">
-                        <span className="rounded bg-[#DCE7DC] px-2 py-0.5 text-[11px] font-semibold text-[#21473A]">
-                          {proj.brief.serviceType.replace('_', ' ').toUpperCase()}
+                  Create Proposal
+                </button>
+                <button
+                  onClick={onLoadSample}
+                  className="rounded-lg border border-[#E2E8F0] bg-white px-3.5 py-1.5 text-xs font-semibold text-[#1E293B] hover:bg-slate-50"
+                >
+                  Load Sample
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4 space-y-3">
+              {projects.map((proj) => {
+                const totals = calculateQuoteTotals(proj.quoteItems || [], proj.quoteConfig);
+                return (
+                  <div
+                    key={proj.id}
+                    className="flex flex-col justify-between rounded-lg border border-[#E2E8F0] bg-white p-4 shadow-2xs transition hover:border-[#CBD5E1] hover:shadow-xs sm:flex-row sm:items-center"
+                  >
+                    <div className="flex-1 min-w-0 pr-4">
+                      <div className="flex items-center space-x-2">
+                        <span className="truncate text-sm font-semibold text-[#1E293B]">
+                          {proj.brief.projectName}
                         </span>
                         {proj.isSample && (
-                          <span className="rounded bg-[#E9795C]/15 px-2 py-0.5 text-[11px] font-semibold text-[#E9795C]">
+                          <span className="rounded bg-slate-100 px-1.5 py-0.2 text-[10px] font-medium text-[#64748B]">
                             Sample
                           </span>
                         )}
+                        <span className="rounded bg-[#F0FDFA] px-1.5 py-0.2 text-[10px] font-medium text-[#0F766E]">
+                          {proj.brief.serviceType.replace('_', ' ')}
+                        </span>
                       </div>
-                      <span className="font-mono text-xs text-[#1F2923]/50">
-                        {new Date(proj.updatedAt || proj.createdAt).toLocaleDateString()}
-                      </span>
+
+                      <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#64748B]">
+                        {proj.brief.clientName && <span>Client: {proj.brief.clientName}</span>}
+                        <span>{proj.proposal.deliverables?.length || 0} Deliverables</span>
+                        <span>{proj.proposal.explicitExclusions?.length || 0} Exclusions</span>
+                        <span>Updated: {new Date(proj.updatedAt || proj.createdAt).toLocaleDateString()}</span>
+                      </div>
                     </div>
 
-                    <h3 className="mt-3 font-editorial text-xl font-bold text-[#21473A] group-hover:text-[#18362C]">
-                      {proj.brief.projectName}
-                    </h3>
-                    {proj.brief.clientName && (
-                      <p className="text-xs font-medium text-[#1F2923]/70">{proj.brief.clientName}</p>
-                    )}
+                    <div className="mt-3 flex items-center justify-between border-t border-[#E2E8F0] pt-2 sm:mt-0 sm:border-0 sm:pt-0 sm:justify-end sm:space-x-4">
+                      <div className="text-left sm:text-right">
+                        <span className="text-[11px] text-[#64748B] block">Estimate</span>
+                        <span className="font-mono text-sm font-bold text-[#1E293B]">
+                          {formatCurrency(totals.grandTotal, proj.quoteConfig.currency)}
+                        </span>
+                      </div>
 
-                    <p className="mt-2.5 line-clamp-2 text-xs text-[#1F2923]/70">
-                      {proj.proposal.projectSummary}
-                    </p>
+                      <div className="flex items-center space-x-1.5">
+                        <button
+                          onClick={() => onOpenProject(proj)}
+                          className="rounded-md border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
+                        >
+                          View Scope
+                        </button>
 
-                    <div className="mt-4 flex items-center justify-between border-t border-[#E5E0D5]/70 pt-3 text-xs">
-                      <span className="text-[#1F2923]/60">Quote Total:</span>
-                      <span className="font-mono font-bold text-[#21473A]">
-                        {formatCurrency(totals.grandTotal, proj.quoteConfig.currency)}
-                      </span>
-                    </div>
+                        <button
+                          onClick={() => onOpenScopeChange(proj)}
+                          className="rounded-md bg-[#F0FDFA] px-2.5 py-1 text-xs font-medium text-[#0F766E] hover:bg-[#CCFBF1]"
+                          title="Audit new client request"
+                        >
+                          Audit Change
+                        </button>
 
-                    <div className="mt-2 flex items-center justify-between text-[11px] text-[#1F2923]/60">
-                      <span>{proj.proposal.deliverables?.length || 0} Deliverables</span>
-                      <span>{proj.proposal.explicitExclusions?.length || 0} Exclusions</span>
-                      <span>{proj.scopeAnalyses?.length || 0} Change Audits</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-5 flex items-center justify-between border-t border-[#E5E0D5]/70 pt-3">
-                    <button
-                      onClick={() => onOpenProject(proj)}
-                      className="flex items-center space-x-1 text-xs font-semibold text-[#21473A] hover:underline"
-                    >
-                      <span>View & Edit</span>
-                      <ArrowRight className="h-3 w-3" />
-                    </button>
-
-                    <div className="flex items-center space-x-1.5">
-                      <button
-                        onClick={() => onOpenScopeChange(proj)}
-                        className="flex items-center space-x-1 rounded bg-[#DCE7DC]/60 px-2 py-1 text-[11px] font-semibold text-[#21473A] hover:bg-[#DCE7DC]"
-                        title="Analyze new client request against this scope"
-                      >
-                        <GitCompare className="h-3 w-3" />
-                        <span>Audit Change</span>
-                      </button>
-
-                      <button
-                        onClick={() => onDeleteProject(proj.id)}
-                        className="rounded p-1 text-[#1F2923]/40 hover:bg-red-50 hover:text-red-600"
-                        title="Delete project"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                      </button>
+                        <button
+                          onClick={() => onDeleteProject(proj.id)}
+                          className="rounded-md p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50"
+                          title="Delete project"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
+          )}
+        </div>
+
+        {/* Right Col: Scope Change Analyzer Secondary Action & Guidelines */}
+        <div className="space-y-4">
+          <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-2xs">
+            <div className="flex items-center space-x-2 text-xs font-semibold text-[#0F766E]">
+              <GitCompare className="h-4 w-4" />
+              <span>Scope Change Analyzer</span>
+            </div>
+            <h3 className="mt-2 text-sm font-bold text-[#1E293B]">
+              Client asking for extra work mid-sprint?
+            </h3>
+            <p className="mt-1 text-xs text-[#64748B]">
+              Paste any email, Slack message, or chat snippet. The analyzer evaluates the request against your approved scope and drafts a professional response.
+            </p>
+
+            <button
+              onClick={() => {
+                if (projects.length > 0) {
+                  onOpenScopeChange(projects[0]);
+                } else {
+                  onLoadSample();
+                }
+              }}
+              className="mt-4 flex w-full items-center justify-center space-x-1.5 rounded-lg border border-[#0F766E] bg-white py-2 text-xs font-semibold text-[#0F766E] hover:bg-[#F0FDFA]"
+            >
+              <span>Launch Analyzer</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </button>
           </div>
-        )}
+
+          <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-2xs text-xs text-[#64748B]">
+            <h4 className="font-semibold text-[#1E293B] mb-2">Scope Defense Best Practices</h4>
+            <ul className="space-y-2 list-disc list-inside text-[11px] leading-relaxed">
+              <li>Always include at least 3 explicit exclusions (e.g. backend data entry, translation).</li>
+              <li>Include a 10% contingency buffer to protect against unexpected revisions.</li>
+              <li>Limit revision iterations to 2 consolidated rounds per milestone.</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );

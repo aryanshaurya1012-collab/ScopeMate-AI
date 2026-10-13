@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import { QuoteConfig, QuoteLineItem, Currency, RateType, PaymentScheduleItem } from '../types/index.ts';
+import React from 'react';
+import { QuoteConfig, QuoteLineItem, Currency, PaymentScheduleItem } from '../types/index.ts';
 import {
   calculateLineItemTotal,
   calculateQuoteTotals,
   formatCurrency,
-  CURRENCY_MAP,
 } from '../utils/calculator.ts';
 import {
   Plus,
@@ -13,10 +12,6 @@ import {
   ArrowDown,
   Calculator,
   ShieldCheck,
-  AlertCircle,
-  Percent,
-  Calendar,
-  FileSpreadsheet,
 } from 'lucide-react';
 
 interface QuoteCalculatorProps {
@@ -100,25 +95,25 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
   return (
     <div className="space-y-6">
       {/* Top Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-[#E5E0D5] bg-white p-4 shadow-2xs">
-        <div className="flex items-center space-x-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-[#21473A]/10 text-[#21473A]">
+      <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl border border-[#E2E8F0] bg-white p-4 shadow-xs">
+        <div className="flex items-center space-x-2.5">
+          <div className="flex h-7 w-7 items-center justify-center rounded-md bg-[#F0FDFA] text-[#0F766E]">
             <Calculator className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-sm font-bold text-[#21473A]">Deterministic Quote Calculator</h3>
-            <p className="text-[11px] text-[#1F2923]/60">Pure mathematical calculation • Independent of AI arithmetic</p>
+            <h3 className="text-xs font-bold text-[#1E293B]">Quote & Line Items Calculator</h3>
+            <p className="text-[11px] text-[#64748B]">Deterministic calculations independent of AI arithmetic</p>
           </div>
         </div>
 
         {!readOnly && (
           <div className="flex flex-wrap items-center gap-3">
-            <div className="flex items-center space-x-2">
-              <span className="text-xs font-semibold text-[#1F2923]">Currency:</span>
+            <div className="flex items-center space-x-1.5">
+              <span className="text-xs font-medium text-[#64748B]">Currency:</span>
               <select
                 value={config.currency}
                 onChange={(e) => onChangeConfig({ ...config, currency: e.target.value as Currency })}
-                className="rounded-md border border-[#E5E0D5] bg-[#F7F5EF] px-2.5 py-1 text-xs font-medium text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="rounded-md border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-medium text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
               >
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
@@ -127,14 +122,14 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
               </select>
             </div>
 
-            <div className="flex items-center space-x-1 rounded-md border border-[#E5E0D5] bg-[#F7F5EF] p-0.5">
+            <div className="flex items-center space-x-1 rounded-md border border-[#E2E8F0] bg-slate-50 p-0.5">
               <button
                 type="button"
                 onClick={() => onChangeConfig({ ...config, rateType: 'hourly' })}
                 className={`rounded px-2.5 py-1 text-xs font-medium ${
                   config.rateType === 'hourly'
-                    ? 'bg-[#21473A] text-white'
-                    : 'text-[#1F2923]/70 hover:text-[#1F2923]'
+                    ? 'bg-white text-[#0F766E] font-semibold shadow-2xs'
+                    : 'text-[#64748B] hover:text-[#1E293B]'
                 }`}
               >
                 Hourly Rates
@@ -144,8 +139,8 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                 onClick={() => onChangeConfig({ ...config, rateType: 'fixed' })}
                 className={`rounded px-2.5 py-1 text-xs font-medium ${
                   config.rateType === 'fixed'
-                    ? 'bg-[#21473A] text-white'
-                    : 'text-[#1F2923]/70 hover:text-[#1F2923]'
+                    ? 'bg-white text-[#0F766E] font-semibold shadow-2xs'
+                    : 'text-[#64748B] hover:text-[#1E293B]'
                 }`}
               >
                 Fixed Item Fees
@@ -156,28 +151,28 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
       </div>
 
       {/* Line Items Table */}
-      <div className="overflow-hidden rounded-xl border border-[#E5E0D5] bg-white shadow-2xs">
+      <div className="overflow-hidden rounded-xl border border-[#E2E8F0] bg-white shadow-xs">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
-            <thead className="border-b border-[#E5E0D5] bg-[#F7F5EF] text-[11px] font-semibold tracking-wider text-[#1F2923]/70 uppercase">
+            <thead className="border-b border-[#E2E8F0] bg-slate-50 text-[11px] font-semibold text-[#64748B]">
               <tr>
-                <th className="px-4 py-3">#</th>
-                <th className="px-4 py-3 min-w-[240px]">Deliverable & Scope Description</th>
-                <th className="px-4 py-3 text-right">
-                  {config.rateType === 'hourly' ? 'Estimated Hours' : 'Quantity'}
+                <th className="px-3.5 py-2.5 w-10">#</th>
+                <th className="px-3.5 py-2.5 min-w-[260px]">Deliverable & Task Description</th>
+                <th className="px-3.5 py-2.5 text-right w-28">
+                  {config.rateType === 'hourly' ? 'Hours' : 'Quantity'}
                 </th>
-                <th className="px-4 py-3 text-right">
-                  {config.rateType === 'hourly' ? `Rate (${config.currency}/hr)` : `Unit Price (${config.currency})`}
+                <th className="px-3.5 py-2.5 text-right w-32">
+                  {config.rateType === 'hourly' ? `Rate (${config.currency}/hr)` : `Price (${config.currency})`}
                 </th>
-                <th className="px-4 py-3 text-right">Line Total</th>
-                {!readOnly && <th className="px-4 py-3 text-center w-24">Actions</th>}
+                <th className="px-3.5 py-2.5 text-right w-32">Total</th>
+                {!readOnly && <th className="px-3.5 py-2.5 text-center w-20">Actions</th>}
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#E5E0D5]/70">
+            <tbody className="divide-y divide-[#E2E8F0]">
               {items.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="px-4 py-8 text-center text-xs text-[#1F2923]/60">
-                    No quote line items defined yet. Click "Add Deliverable Item" below.
+                  <td colSpan={6} className="px-4 py-8 text-center text-xs text-[#64748B]">
+                    No quote line items defined yet. Click "Add Line Item" below.
                   </td>
                 </tr>
               ) : (
@@ -186,26 +181,26 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                   return (
                     <tr
                       key={item.id}
-                      className={`hover:bg-[#F7F5EF]/40 transition ${
-                        item.isAdditional ? 'bg-[#E9795C]/5' : ''
+                      className={`hover:bg-slate-50/50 transition ${
+                        item.isAdditional ? 'bg-[#F0FDFA]/40' : ''
                       }`}
                     >
-                      <td className="px-4 py-3 font-mono text-[11px] text-[#1F2923]/50">
+                      <td className="px-3.5 py-2.5 font-mono text-[11px] text-slate-400">
                         {idx + 1}
                       </td>
 
-                      <td className="px-4 py-3">
+                      <td className="px-3.5 py-2.5">
                         {readOnly ? (
                           <div>
-                            <div className="flex items-center space-x-1.5 font-semibold text-[#21473A]">
+                            <div className="flex items-center space-x-1.5 font-semibold text-[#1E293B]">
                               <span>{item.title}</span>
                               {item.isAdditional && (
-                                <span className="rounded bg-[#E9795C]/20 px-1.5 py-0.2 text-[9px] font-bold text-[#E9795C]">
+                                <span className="rounded bg-[#F0FDFA] px-1.5 py-0.2 text-[9px] font-medium text-[#0F766E] border border-teal-200">
                                   Scope Change Addon
                                 </span>
                               )}
                             </div>
-                            <p className="mt-0.5 text-[#1F2923]/70 text-[11px]">{item.description}</p>
+                            <p className="mt-0.5 text-[#64748B] text-[11px]">{item.description}</p>
                           </div>
                         ) : (
                           <div className="space-y-1">
@@ -214,11 +209,11 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                                 type="text"
                                 value={item.title}
                                 onChange={(e) => handleUpdateItem(item.id, { title: e.target.value })}
-                                className="w-full rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 font-semibold text-[#21473A] focus:border-[#21473A] focus:outline-none"
-                                placeholder="Item title"
+                                className="w-full rounded border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-semibold text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
+                                placeholder="Deliverable name"
                               />
                               {item.isAdditional && (
-                                <span className="shrink-0 rounded bg-[#E9795C]/20 px-1.5 py-0.5 text-[9px] font-bold text-[#E9795C]">
+                                <span className="shrink-0 rounded bg-[#F0FDFA] px-1.5 py-0.5 text-[9px] font-medium text-[#0F766E] border border-teal-200">
                                   Scope Addon
                                 </span>
                               )}
@@ -227,16 +222,16 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                               type="text"
                               value={item.description}
                               onChange={(e) => handleUpdateItem(item.id, { description: e.target.value })}
-                              className="w-full rounded border border-transparent bg-transparent px-2 py-0.5 text-[11px] text-[#1F2923]/70 hover:border-[#E5E0D5] focus:border-[#21473A] focus:outline-none"
+                              className="w-full rounded border border-transparent bg-transparent px-2 py-0.5 text-[11px] text-[#64748B] hover:border-[#E2E8F0] focus:border-[#0F766E] focus:bg-white focus:outline-none"
                               placeholder="Functional scope or description"
                             />
                           </div>
                         )}
                       </td>
 
-                      <td className="px-4 py-3 text-right">
+                      <td className="px-3.5 py-2.5 text-right">
                         {readOnly ? (
-                          <span className="font-mono">{item.quantity}</span>
+                          <span className="font-mono text-xs">{item.quantity}</span>
                         ) : (
                           <input
                             type="number"
@@ -246,14 +241,14 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                             onChange={(e) =>
                               handleUpdateItem(item.id, { quantity: Number(e.target.value) || 0 })
                             }
-                            className="w-20 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 text-right font-mono focus:border-[#21473A] focus:outline-none"
+                            className="w-20 rounded border border-[#E2E8F0] bg-white px-2 py-1 text-right font-mono text-xs focus:border-[#0F766E] focus:outline-none"
                           />
                         )}
                       </td>
 
-                      <td className="px-4 py-3 text-right">
+                      <td className="px-3.5 py-2.5 text-right">
                         {readOnly ? (
-                          <span className="font-mono">{item.unitRate}</span>
+                          <span className="font-mono text-xs">{item.unitRate}</span>
                         ) : (
                           <input
                             type="number"
@@ -263,23 +258,23 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                             onChange={(e) =>
                               handleUpdateItem(item.id, { unitRate: Number(e.target.value) || 0 })
                             }
-                            className="w-24 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 text-right font-mono focus:border-[#21473A] focus:outline-none"
+                            className="w-24 rounded border border-[#E2E8F0] bg-white px-2 py-1 text-right font-mono text-xs focus:border-[#0F766E] focus:outline-none"
                           />
                         )}
                       </td>
 
-                      <td className="px-4 py-3 text-right font-mono font-bold text-[#21473A]">
+                      <td className="px-3.5 py-2.5 text-right font-mono font-bold text-[#1E293B]">
                         {formatCurrency(lineTotal, config.currency)}
                       </td>
 
                       {!readOnly && (
-                        <td className="px-4 py-3 text-center">
+                        <td className="px-3.5 py-2.5 text-center">
                           <div className="flex items-center justify-center space-x-1">
                             <button
                               type="button"
                               onClick={() => handleMoveItem(idx, 'up')}
                               disabled={idx === 0}
-                              className="rounded p-1 text-[#1F2923]/50 hover:bg-[#E5E0D5]/50 disabled:opacity-20"
+                              className="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-20"
                               title="Move up"
                             >
                               <ArrowUp className="h-3 w-3" />
@@ -288,7 +283,7 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                               type="button"
                               onClick={() => handleMoveItem(idx, 'down')}
                               disabled={idx === items.length - 1}
-                              className="rounded p-1 text-[#1F2923]/50 hover:bg-[#E5E0D5]/50 disabled:opacity-20"
+                              className="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-20"
                               title="Move down"
                             >
                               <ArrowDown className="h-3 w-3" />
@@ -296,7 +291,7 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                             <button
                               type="button"
                               onClick={() => handleDeleteItem(item.id)}
-                              className="rounded p-1 text-[#E9795C] hover:bg-red-50"
+                              className="rounded p-1 text-slate-400 hover:text-red-600 hover:bg-red-50"
                               title="Delete line item"
                             >
                               <Trash2 className="h-3 w-3" />
@@ -313,33 +308,33 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
         </div>
 
         {!readOnly && (
-          <div className="border-t border-[#E5E0D5] bg-[#F7F5EF]/50 p-3">
+          <div className="border-t border-[#E2E8F0] bg-slate-50/50 p-3">
             <button
               type="button"
               onClick={handleAddItem}
-              className="flex items-center space-x-1.5 rounded-md border border-[#21473A]/25 bg-white px-3 py-1.5 text-xs font-semibold text-[#21473A] hover:bg-[#DCE7DC]/40"
+              className="flex items-center space-x-1.5 rounded-md border border-[#E2E8F0] bg-white px-3 py-1.5 text-xs font-semibold text-[#1E293B] hover:bg-slate-50"
             >
-              <Plus className="h-3.5 w-3.5" />
-              <span>Add Deliverable Line Item</span>
+              <Plus className="h-3.5 w-3.5 text-[#0F766E]" />
+              <span>Add Line Item</span>
             </button>
           </div>
         )}
       </div>
 
-      {/* Adjustments & Totals Summary Grid */}
+      {/* Adjustments & Totals Summary */}
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
-        {/* Adjustments: Contingency, Discount, Tax, Validity */}
-        <div className="space-y-4 rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs lg:col-span-7">
-          <h4 className="font-editorial text-base font-bold text-[#21473A]">
+        {/* Adjustments Column */}
+        <div className="space-y-4 rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs lg:col-span-7">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
             Estimate Terms & Buffers
           </h4>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">
+              <label className="block text-xs font-semibold text-[#1E293B]">
                 Contingency Buffer (%)
               </label>
-              <p className="text-[10px] text-[#1F2923]/60">Protects against unforeseen edge-cases</p>
+              <p className="text-[10px] text-[#64748B]">Protects against unexpected revisions</p>
               {readOnly ? (
                 <p className="mt-1 font-mono text-xs">{config.contingencyPercent}%</p>
               ) : (
@@ -355,7 +350,7 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                         contingencyPercent: Math.max(0, Number(e.target.value) || 0),
                       })
                     }
-                    className="w-20 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 text-xs font-mono focus:border-[#21473A] focus:outline-none"
+                    className="w-16 rounded border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-mono focus:border-[#0F766E] focus:outline-none"
                   />
                   <div className="flex space-x-1">
                     {[0, 10, 15, 20].map((pct) => (
@@ -363,10 +358,10 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                         key={pct}
                         type="button"
                         onClick={() => onChangeConfig({ ...config, contingencyPercent: pct })}
-                        className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${
+                        className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${
                           config.contingencyPercent === pct
-                            ? 'bg-[#21473A] text-white'
-                            : 'bg-[#F7F5EF] text-[#1F2923]/70 hover:bg-[#E5E0D5]'
+                            ? 'bg-[#0F766E] text-white'
+                            : 'bg-slate-100 text-[#64748B] hover:bg-slate-200'
                         }`}
                       >
                         {pct}%
@@ -378,8 +373,8 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Commercial Discount</label>
-              <p className="text-[10px] text-[#1F2923]/60">Optional negotiated discount</p>
+              <label className="block text-xs font-semibold text-[#1E293B]">Commercial Discount</label>
+              <p className="text-[10px] text-[#64748B]">Negotiated discount</p>
               {readOnly ? (
                 <p className="mt-1 font-mono text-xs">
                   {config.discountValue > 0
@@ -400,7 +395,7 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                         discountValue: Math.max(0, Number(e.target.value) || 0),
                       })
                     }
-                    className="w-24 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 text-xs font-mono focus:border-[#21473A] focus:outline-none"
+                    className="w-20 rounded border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-mono focus:border-[#0F766E] focus:outline-none"
                   />
                   <button
                     type="button"
@@ -410,7 +405,7 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                         discountType: config.discountType === 'percentage' ? 'fixed' : 'percentage',
                       })
                     }
-                    className="rounded border border-[#E5E0D5] bg-[#F7F5EF] px-2 py-1 text-[10px] font-semibold text-[#1F2923]"
+                    className="rounded border border-[#E2E8F0] bg-white px-2 py-1 text-[10px] font-semibold text-[#1E293B]"
                   >
                     {config.discountType === 'percentage' ? '%' : config.currency}
                   </button>
@@ -419,8 +414,8 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Applicable Tax / VAT (%)</label>
-              <p className="text-[10px] text-[#1F2923]/60">Explicit opt-in only. 0% by default</p>
+              <label className="block text-xs font-semibold text-[#1E293B]">Applicable Tax / VAT (%)</label>
+              <p className="text-[10px] text-[#64748B]">Explicit opt-in (0% by default)</p>
               {readOnly ? (
                 <p className="mt-1 font-mono text-xs">
                   {config.taxPercent > 0 ? `${config.taxPercent}%` : 'Excluding taxes'}
@@ -438,9 +433,9 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                         taxPercent: Math.max(0, Number(e.target.value) || 0),
                       })
                     }
-                    className="w-20 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 text-xs font-mono focus:border-[#21473A] focus:outline-none"
+                    className="w-16 rounded border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-mono focus:border-[#0F766E] focus:outline-none"
                   />
-                  <span className="text-[11px] text-[#1F2923]/60">
+                  <span className="text-[11px] text-[#64748B]">
                     {config.taxPercent === 0 ? 'Excluding taxes' : `+${config.taxPercent}% Tax`}
                   </span>
                 </div>
@@ -448,8 +443,8 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Estimate Validity Window</label>
-              <p className="text-[10px] text-[#1F2923]/60">Days before quote expires</p>
+              <label className="block text-xs font-semibold text-[#1E293B]">Validity Window (Days)</label>
+              <p className="text-[10px] text-[#64748B]">Days before quote expires</p>
               {readOnly ? (
                 <p className="mt-1 font-mono text-xs">{config.validityDays} Days</p>
               ) : (
@@ -465,130 +460,125 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                         validityDays: Math.max(1, Number(e.target.value) || 14),
                       })
                     }
-                    className="w-20 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-2 py-1 text-xs font-mono focus:border-[#21473A] focus:outline-none"
+                    className="w-16 rounded border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-mono focus:border-[#0F766E] focus:outline-none"
                   />
-                  <span className="text-[11px] text-[#1F2923]/60">Days from issuance</span>
+                  <span className="text-[11px] text-[#64748B]">Days</span>
                 </div>
               )}
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#1F2923]">Client Pricing Notes</label>
+            <label className="block text-xs font-semibold text-[#1E293B]">Client Pricing Notes</label>
             {readOnly ? (
-              <p className="mt-1 text-xs text-[#1F2923]/70">{config.notes || 'None'}</p>
+              <p className="mt-1 text-xs text-[#64748B]">{config.notes || 'None'}</p>
             ) : (
               <input
                 type="text"
                 value={config.notes || ''}
                 onChange={(e) => onChangeConfig({ ...config, notes: e.target.value })}
-                placeholder="e.g. Estimate valid for 14 days. Excludes third-party API or cloud hosting fees."
-                className="mt-1 w-full rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-1.5 text-xs text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                placeholder="e.g. Estimate valid for 14 days. Excludes third-party API or hosting costs."
+                className="mt-1 w-full rounded border border-[#E2E8F0] bg-white px-3 py-1.5 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
               />
             )}
           </div>
         </div>
 
-        {/* Deterministic Financial Breakdown */}
-        <div className="rounded-xl border border-[#21473A]/20 bg-[#F7F5EF] p-5 shadow-2xs lg:col-span-5">
-          <h4 className="font-editorial text-base font-bold text-[#21473A]">
-            Financial Breakdown
-          </h4>
+        {/* Clean Financial Totals Column */}
+        <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs lg:col-span-5 flex flex-col justify-between">
+          <div>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
+              Financial Summary
+            </h4>
 
-          <div className="mt-4 space-y-2.5 text-xs">
-            <div className="flex items-center justify-between">
-              <span className="text-[#1F2923]/70">Line Items Subtotal:</span>
-              <span className="font-mono font-semibold text-[#1F2923]">
-                {formatCurrency(totals.subtotal, config.currency)}
-              </span>
-            </div>
-
-            {totals.contingencyAmount > 0 && (
+            <div className="mt-4 space-y-2.5 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-[#1F2923]/70">
-                  Contingency Buffer ({config.contingencyPercent}%):
-                </span>
-                <span className="font-mono font-semibold text-[#21473A]">
-                  +{formatCurrency(totals.contingencyAmount, config.currency)}
+                <span className="text-[#64748B]">Line Items Subtotal:</span>
+                <span className="font-mono font-semibold text-[#1E293B]">
+                  {formatCurrency(totals.subtotal, config.currency)}
                 </span>
               </div>
-            )}
 
-            {totals.discountAmount > 0 && (
-              <div className="flex items-center justify-between">
-                <span className="text-[#1F2923]/70">
-                  Applied Discount (
-                  {config.discountType === 'percentage'
-                    ? `${config.discountValue}%`
-                    : 'Fixed'}
-                  ):
-                </span>
-                <span className="font-mono font-semibold text-[#E9795C]">
-                  -{formatCurrency(totals.discountAmount, config.currency)}
-                </span>
-              </div>
-            )}
-
-            {totals.taxAmount > 0 ? (
-              <div className="flex items-center justify-between">
-                <span className="text-[#1F2923]/70">Tax / VAT ({config.taxPercent}%):</span>
-                <span className="font-mono font-semibold text-[#1F2923]">
-                  +{formatCurrency(totals.taxAmount, config.currency)}
-                </span>
-              </div>
-            ) : (
-              <div className="flex items-center justify-between text-[11px] text-[#1F2923]/50">
-                <span>Taxes:</span>
-                <span>Excluding taxes</span>
-              </div>
-            )}
-
-            <div className="border-t border-[#21473A]/20 pt-3">
-              <div className="flex items-baseline justify-between">
-                <div>
-                  <span className="text-xs font-bold uppercase tracking-wider text-[#21473A]">
-                    Estimated Grand Total
+              {totals.contingencyAmount > 0 && (
+                <div className="flex items-center justify-between text-[#0F766E]">
+                  <span>Contingency Buffer ({config.contingencyPercent}%):</span>
+                  <span className="font-mono font-semibold">
+                    +{formatCurrency(totals.contingencyAmount, config.currency)}
                   </span>
-                  <p className="text-[10px] text-[#1F2923]/60">Valid for {config.validityDays} days</p>
                 </div>
-                <span className="font-mono text-2xl font-bold text-[#21473A]">
-                  {formatCurrency(totals.grandTotal, config.currency)}
-                </span>
+              )}
+
+              {totals.discountAmount > 0 && (
+                <div className="flex items-center justify-between text-red-600">
+                  <span>
+                    Discount ({config.discountType === 'percentage' ? `${config.discountValue}%` : 'Fixed'}):
+                  </span>
+                  <span className="font-mono font-semibold">
+                    -{formatCurrency(totals.discountAmount, config.currency)}
+                  </span>
+                </div>
+              )}
+
+              {totals.taxAmount > 0 ? (
+                <div className="flex items-center justify-between">
+                  <span className="text-[#64748B]">Tax / VAT ({config.taxPercent}%):</span>
+                  <span className="font-mono font-semibold text-[#1E293B]">
+                    +{formatCurrency(totals.taxAmount, config.currency)}
+                  </span>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between text-[11px] text-slate-400">
+                  <span>Taxes:</span>
+                  <span>Excluding taxes</span>
+                </div>
+              )}
+
+              <div className="border-t border-[#E2E8F0] pt-3">
+                <div className="flex items-baseline justify-between">
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
+                      Grand Total Estimate
+                    </span>
+                    <p className="text-[10px] text-[#64748B]">Valid for {config.validityDays} days</p>
+                  </div>
+                  <span className="font-mono text-xl font-bold text-[#0F766E]">
+                    {formatCurrency(totals.grandTotal, config.currency)}
+                  </span>
+                </div>
               </div>
             </div>
           </div>
 
-          <div className="mt-5 rounded-lg border border-[#21473A]/15 bg-white p-3 text-[11px] text-[#1F2923]/70">
-            <div className="flex items-center space-x-1.5 font-semibold text-[#21473A]">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#21473A]" />
-              <span>Professional Estimate Notice</span>
+          <div className="mt-5 rounded-lg border border-[#E2E8F0] bg-slate-50 p-3 text-[11px] text-[#64748B]">
+            <div className="flex items-center space-x-1.5 font-semibold text-[#1E293B]">
+              <ShieldCheck className="h-3.5 w-3.5 text-[#0F766E]" />
+              <span>Commercial Estimate</span>
             </div>
-            <p className="mt-1">
-              This document constitutes a project scope estimate and quote proposal. It is not an
-              executed legal contract or an issued tax invoice.
+            <p className="mt-0.5">
+              This document is a commercial scope estimate and quote proposal, not a legally binding tax invoice.
             </p>
           </div>
         </div>
       </div>
 
       {/* Suggested Payment Milestone Schedule */}
-      <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs">
+      <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="font-editorial text-base font-bold text-[#21473A]">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#1E293B]">
               Payment Milestone Schedule
             </h4>
-            <p className="text-xs text-[#1F2923]/60">
-              Clear milestone checkpoints protect cash flow and tie payments to verified delivery.
+            <p className="text-xs text-[#64748B]">
+              Tying payments to verified milestone delivery
             </p>
           </div>
 
           <div className="flex items-center space-x-2">
             <span
-              className={`rounded px-2 py-0.5 text-xs font-mono font-bold ${
+              className={`rounded px-2 py-0.5 text-xs font-mono font-medium ${
                 milestonePercentageSum === 100
-                  ? 'bg-[#DCE7DC] text-[#21473A]'
-                  : 'bg-[#E9795C]/20 text-[#E9795C]'
+                  ? 'bg-[#F0FDFA] text-[#0F766E]'
+                  : 'bg-amber-50 text-amber-700'
               }`}
             >
               Sum: {milestonePercentageSum}%
@@ -597,43 +587,43 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
               <button
                 type="button"
                 onClick={handleAddMilestone}
-                className="flex items-center space-x-1 rounded border border-[#21473A]/20 bg-white px-2.5 py-1 text-xs font-medium text-[#21473A] hover:bg-[#DCE7DC]/40"
+                className="flex items-center space-x-1 rounded border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
               >
-                <Plus className="h-3 w-3" />
+                <Plus className="h-3 w-3 text-[#0F766E]" />
                 <span>Add Milestone</span>
               </button>
             )}
           </div>
         </div>
 
-        <div className="mt-4 divide-y divide-[#E5E0D5]">
+        <div className="mt-3 divide-y divide-[#E2E8F0]">
           {config.paymentSchedule.map((milestone) => {
             const milestoneValue = totals.grandTotal * (milestone.percentage / 100);
             return (
               <div
                 key={milestone.id}
-                className="flex flex-col items-start justify-between gap-3 py-3 sm:flex-row sm:items-center"
+                className="flex flex-col items-start justify-between gap-2 py-2.5 sm:flex-row sm:items-center"
               >
                 <div className="flex-1 space-y-1">
                   {readOnly ? (
-                    <div className="font-semibold text-xs text-[#21473A]">{milestone.phase}</div>
+                    <div className="font-semibold text-xs text-[#1E293B]">{milestone.phase}</div>
                   ) : (
                     <input
                       type="text"
                       value={milestone.phase}
                       onChange={(e) => handleUpdateMilestone(milestone.id, { phase: e.target.value })}
-                      className="w-full rounded border border-[#E5E0D5] bg-[#F7F5EF]/30 px-2 py-1 text-xs font-semibold text-[#21473A] focus:border-[#21473A] focus:outline-none"
+                      className="w-full rounded border border-[#E2E8F0] bg-white px-2 py-1 text-xs font-semibold text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
                     />
                   )}
                   {readOnly ? (
-                    <p className="text-[11px] text-[#1F2923]/60">{milestone.trigger}</p>
+                    <p className="text-[11px] text-[#64748B]">{milestone.trigger}</p>
                   ) : (
                     <input
                       type="text"
                       value={milestone.trigger}
                       onChange={(e) => handleUpdateMilestone(milestone.id, { trigger: e.target.value })}
                       placeholder="Verification trigger condition..."
-                      className="w-full rounded border border-transparent bg-transparent px-2 py-0.5 text-[11px] text-[#1F2923]/60 hover:border-[#E5E0D5] focus:border-[#21473A] focus:outline-none"
+                      className="w-full rounded border border-transparent bg-transparent px-2 py-0.5 text-[11px] text-[#64748B] hover:border-[#E2E8F0] focus:border-[#0F766E] focus:bg-white focus:outline-none"
                     />
                   )}
                 </div>
@@ -654,12 +644,12 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                               percentage: Number(e.target.value) || 0,
                             })
                           }
-                          className="w-14 rounded border border-[#E5E0D5] bg-[#F7F5EF]/40 px-1.5 py-0.5 text-right font-mono text-xs focus:border-[#21473A] focus:outline-none"
+                          className="w-14 rounded border border-[#E2E8F0] bg-white px-1.5 py-0.5 text-right font-mono text-xs focus:border-[#0F766E] focus:outline-none"
                         />
                       )}
-                      <span className="text-xs text-[#1F2923]/60">%</span>
+                      <span className="text-xs text-[#64748B]">%</span>
                     </div>
-                    <span className="font-mono text-xs font-bold text-[#21473A]">
+                    <span className="font-mono text-xs font-bold text-[#1E293B]">
                       {formatCurrency(milestoneValue, config.currency)}
                     </span>
                   </div>
@@ -668,7 +658,7 @@ export const QuoteCalculator: React.FC<QuoteCalculatorProps> = ({
                     <button
                       type="button"
                       onClick={() => handleDeleteMilestone(milestone.id)}
-                      className="rounded p-1 text-[#E9795C] hover:bg-red-50"
+                      className="rounded p-1 text-slate-400 hover:text-red-600 hover:bg-red-50"
                       title="Remove milestone"
                     >
                       <Trash2 className="h-3 w-3" />

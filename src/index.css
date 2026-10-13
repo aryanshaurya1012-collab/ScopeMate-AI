@@ -2,22 +2,28 @@
 
 @layer base {
   :root {
-    --bg-ivory: #F7F5EF;
-    --forest-green: #21473A;
-    --muted-sage: #DCE7DC;
-    --coral-accent: #E9795C;
-    --charcoal-text: #1F2923;
-    --border-sand: #E5E0D5;
+    --bg-main: #F8FAFC;
+    --surface-white: #FFFFFF;
+    --text-main: #1E293B;
+    --text-muted: #64748B;
+    --border-subtle: #E2E8F0;
+    --accent-teal: #0F766E;
+    --accent-hover: #115E59;
+    --accent-subtle: #F0FDFA;
+    --warning-soft: #FEF3C7;
+    --error-red: #B91C1C;
+    --success-green: #15803D;
   }
 
   body {
-    background-color: #F7F5EF;
-    color: #1F2923;
+    background-color: #F8FAFC;
+    color: #1E293B;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
 
-  h1, h2, h3, .font-editorial {
-    font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', Times, serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    letter-spacing: -0.015em;
   }
 }
 
@@ -25,13 +31,13 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 15mm 15mm 15mm 15mm;
+    margin: 14mm 14mm 14mm 14mm;
   }
 
   body {
     background: #ffffff !important;
-    color: #111827 !important;
-    font-size: 11pt !important;
+    color: #0f172a !important;
+    font-size: 10.5pt !important;
     line-height: 1.45 !important;
   }
 
@@ -69,14 +75,13 @@
     break-after: always !important;
   }
 
-  /* Force table formatting to be crisp in print */
   table {
     width: 100% !important;
     border-collapse: collapse !important;
   }
 
   th, td {
-    padding: 6pt 8pt !important;
-    border-bottom: 1px solid #d1d5db !important;
+    padding: 5pt 7pt !important;
+    border-bottom: 1px solid #e2e8f0 !important;
   }
 }

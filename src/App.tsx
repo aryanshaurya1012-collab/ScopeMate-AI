@@ -10,7 +10,7 @@ import { ScopeChangeAnalyzer } from './components/ScopeChangeAnalyzer.tsx';
 import { ProjectsList } from './components/ProjectsList.tsx';
 import { AboutOpenAI } from './components/AboutOpenAI.tsx';
 import { PrintDocument } from './components/PrintDocument.tsx';
-import { AlertCircle, Sparkles, X } from 'lucide-react';
+import { AlertCircle, X } from 'lucide-react';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('dashboard');
@@ -23,7 +23,6 @@ export default function App() {
   useEffect(() => {
     const saved = getSavedProjects();
     if (saved.length === 0) {
-      // Seed with realistic sample project so first-time users can immediately test all workflows
       saveProject(SAMPLE_PROJECT);
       setProjects([SAMPLE_PROJECT]);
       setActiveProject(SAMPLE_PROJECT);
@@ -122,7 +121,7 @@ export default function App() {
     } catch (err: any) {
       console.error('Failed to generate proposal:', err);
       setApiErrorMessage(
-        err.message || 'Failed to communicate with the Gemma 4 server endpoint. Check API key configuration.'
+        err.message || 'Failed to communicate with the Gemma 4 server endpoint.'
       );
     } finally {
       setIsLoadingProposal(false);
@@ -169,7 +168,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF] text-[#1F2923] flex flex-col justify-between selection:bg-[#DCE7DC] selection:text-[#21473A]">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#1E293B] flex flex-col justify-between selection:bg-[#F0FDFA] selection:text-[#0F766E]">
       {/* Top Navbar */}
       <div className="no-print">
         <Navbar
@@ -180,26 +179,26 @@ export default function App() {
           onLoadSample={handleLoadSample}
         />
 
-        {/* Global Error Banner */}
+        {/* Global Error Notice */}
         {apiErrorMessage && (
-          <div className="border-b border-red-200 bg-red-50 px-4 py-3 sm:px-6">
+          <div className="border-b border-red-200 bg-red-50 px-4 py-2.5 sm:px-6">
             <div className="mx-auto flex max-w-7xl items-center justify-between">
               <div className="flex items-center space-x-2 text-xs text-red-800">
                 <AlertCircle className="h-4 w-4 shrink-0 text-red-600" />
                 <span>{apiErrorMessage}</span>
               </div>
-              <div className="flex items-center space-x-3">
+              <div className="flex items-center space-x-2">
                 <button
                   onClick={handleLoadSample}
-                  className="rounded border border-red-300 bg-white px-2.5 py-1 text-xs font-semibold text-red-800 hover:bg-red-100"
+                  className="rounded border border-red-300 bg-white px-2 py-0.5 text-xs font-medium text-red-800 hover:bg-red-50"
                 >
-                  Explore Sample Project
+                  Explore Sample
                 </button>
                 <button
                   onClick={() => setApiErrorMessage(null)}
-                  className="text-red-600 hover:text-red-900"
+                  className="text-red-500 hover:text-red-800 p-1"
                 >
-                  <X className="h-4 w-4" />
+                  <X className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>
@@ -207,7 +206,7 @@ export default function App() {
         )}
       </div>
 
-      {/* Main View Area */}
+      {/* Main Content Area */}
       <main className="flex-1">
         {activeTab === 'dashboard' && (
           <Dashboard
@@ -266,27 +265,27 @@ export default function App() {
         )}
       </main>
 
-      {/* Hidden print element that receives print focus if requested from anywhere */}
+      {/* Hidden print element that receives print styles */}
       <div className="hidden print:block print:w-full print:m-0 print:p-0">
         {activeProject && <PrintDocument project={activeProject} />}
       </div>
 
       {/* Footer */}
-      <footer className="no-print mt-12 border-t border-[#E5E0D5] bg-[#F7F5EF] py-8 text-xs text-[#1F2923]/60">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 sm:flex-row sm:px-6">
+      <footer className="no-print mt-12 border-t border-[#E2E8F0] bg-white py-6 text-xs text-[#64748B]">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-4 sm:flex-row sm:px-6">
           <div className="flex items-center space-x-2">
-            <span className="font-editorial text-base font-bold text-[#21473A]">ScopeMate</span>
+            <span className="font-semibold text-[#1E293B]">ScopeMate</span>
             <span>•</span>
-            <span>Hacktoberfest Open-Source AI Challenge (Week 2: Side Hustle)</span>
+            <span>Scope & Quote Engine for Freelancers</span>
           </div>
 
           <div className="flex items-center space-x-4">
-            <span className="font-mono text-[11px]">Model: gemma-4-26b-a4b-it</span>
+            <span className="text-[11px] text-slate-400">Powered by open-weight Gemma 4</span>
             <button
               onClick={() => setActiveTab('about')}
-              className="hover:text-[#21473A] underline"
+              className="text-[#64748B] hover:text-[#0F766E] underline"
             >
-              Privacy & Open Innovation Notice
+              Privacy & AI Architecture
             </button>
           </div>
         </div>

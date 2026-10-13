@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { ClientBrief, Currency, RateType, ServiceType } from '../types/index.ts';
 import {
-  Sparkles,
   ArrowRight,
-  AlertCircle,
-  HelpCircle,
   Code2,
   Palette,
   PenTool,
   Film,
-  Layers,
-  CheckCircle2,
+  Sparkles,
+  AlertCircle,
 } from 'lucide-react';
 
 interface BriefBuilderProps {
@@ -76,7 +73,7 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
       setFormData({
         ...formData,
         serviceType: 'web_development',
-        projectName: 'E-Commerce Headless Storefront & Checkout',
+        projectName: 'E-Commerce Storefront & Shopify Integration',
         clientName: 'Nordic Artisan Goods',
         clientBrief:
           'We want to build a headless Next.js / Shopify storefront for our handcrafted ceramics brand. Current WordPress site is sluggish and drops mobile conversions. We need product listing, faceted filters by glaze & clay type, cart drawer, direct Shopify checkout redirect, and an About Our Studio editorial page.',
@@ -91,13 +88,13 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
         availableHours: 60,
         revisionRounds: 2,
         constraintsAndExclusions: 'Excludes backend Shopify product catalog data entry and ERP inventory synchronization.',
-        additionalNotes: 'Client frequently asks for custom 3D webgl model viewers; explicitly exclude 3D canvas rendering for phase 1.',
+        additionalNotes: 'Explicitly exclude custom 3D webgl canvas model viewers for Phase 1.',
       });
     } else if (type === 'ui_ux_design') {
       setFormData({
         ...formData,
         serviceType: 'ui_ux_design',
-        projectName: 'B2B Logistics SaaS Mobile App Design System',
+        projectName: 'Logistics Field Technician Mobile App UI',
         clientName: 'FleetPulse Technologies',
         clientBrief:
           'Design an iOS & Android field technician mobile app in Figma. Fleet managers dispatch routes and technicians log vehicle diagnostics. Current interface has 12 nested screens with confusing icons. We need high-fidelity wireframes, interactive prototype, design token documentation, and asset export for engineers.',
@@ -118,7 +115,7 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
       setFormData({
         ...formData,
         serviceType: 'content_writing',
-        projectName: 'Developer Documentation & API Onboarding Guides',
+        projectName: 'Developer Documentation & API Guides',
         clientName: 'CloudMesh Infrastructure',
         clientBrief:
           'We are launching a new distributed vector database and need complete developer documentation: Quickstart tutorial in Python & TypeScript, 4 deep-dive architecture articles, and copy for the SDK developer landing page. We need high-accuracy technical writing with tested code snippets.',
@@ -139,11 +136,11 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
       setFormData({
         ...formData,
         serviceType: 'video_editing',
-        projectName: 'Product Hunt Launch Video & Social Teasers',
+        projectName: 'Product Launch Video & Social Teasers',
         clientName: 'Veloce AI Productivity',
         clientBrief:
-          'We need a punchy 90-second product demo video for our upcoming Product Hunt launch, plus three 15-second vertical cuts for X/LinkedIn. Client provides raw screen recordings and voiceover audio. We need kinetic typography, clean sound design, pacing, custom zooms, and color correction.',
-        desiredOutcome: 'Top 3 Product of the Day finish on Product Hunt with engaging social hooks.',
+          'We need a punchy 90-second product demo video for our upcoming product launch, plus three 15-second vertical cuts for social. Client provides raw screen recordings and voiceover audio. We need kinetic typography, clean sound design, pacing, custom zooms, and color correction.',
+        desiredOutcome: 'Top product launch engagement with clear demonstration of workflow benefits.',
         expectedDeliverables: '1x 90s 4K master landscape video, 3x 15s 9:16 vertical reels, project source file archive.',
         timeline: '10 business days',
         budgetKnown: true,
@@ -162,111 +159,108 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
   return (
     <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6">
       {/* Header */}
-      <div className="border-b border-[#E5E0D5] pb-5">
-        <div className="flex items-center space-x-2 text-xs font-semibold text-[#21473A]">
-          <span>STEP 1 OF 3</span>
-          <span>•</span>
-          <span>CLIENT BRIEF BUILDER</span>
-        </div>
-        <h1 className="mt-2 font-editorial text-3xl font-bold text-[#21473A] sm:text-4xl">
-          Define the Project Boundaries
+      <div className="border-b border-[#E2E8F0] pb-5">
+        <h1 className="text-2xl font-bold tracking-tight text-[#1E293B]">
+          New Proposal & Scope Definition
         </h1>
-        <p className="mt-2 text-sm text-[#1F2923]/70 sm:text-base">
-          Fill out what you know about the project. Gemma 4 will extrapolate deliverables,
-          clarify ambiguities, outline explicit exclusions, and draft your professional proposal.
+        <p className="mt-1 text-sm text-[#64748B]">
+          Enter the client's brief and commercial parameters. ScopeMate will formulate deliverables,
+          acceptance criteria, and explicit exclusions using open-weight Gemma 4.
         </p>
 
-        {/* Preset quick buttons */}
+        {/* Quick presets */}
         <div className="mt-4 flex flex-wrap items-center gap-2">
-          <span className="text-xs font-medium text-[#1F2923]/60">Quick Preset:</span>
+          <span className="text-xs text-[#64748B]">Fill example preset:</span>
           <button
             type="button"
             onClick={() => handleApplyPreset('web_development')}
-            className="flex items-center space-x-1 rounded-md border border-[#21473A]/20 bg-white px-2.5 py-1 text-xs font-medium text-[#21473A] hover:bg-[#DCE7DC]/40"
+            className="flex items-center space-x-1 rounded-md border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
           >
-            <Code2 className="h-3 w-3 text-[#21473A]" />
+            <Code2 className="h-3 w-3 text-[#0F766E]" />
             <span>Web Dev</span>
           </button>
           <button
             type="button"
             onClick={() => handleApplyPreset('ui_ux_design')}
-            className="flex items-center space-x-1 rounded-md border border-[#21473A]/20 bg-white px-2.5 py-1 text-xs font-medium text-[#21473A] hover:bg-[#DCE7DC]/40"
+            className="flex items-center space-x-1 rounded-md border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
           >
-            <Palette className="h-3 w-3 text-[#21473A]" />
+            <Palette className="h-3 w-3 text-[#0F766E]" />
             <span>UI/UX Design</span>
           </button>
           <button
             type="button"
             onClick={() => handleApplyPreset('content_writing')}
-            className="flex items-center space-x-1 rounded-md border border-[#21473A]/20 bg-white px-2.5 py-1 text-xs font-medium text-[#21473A] hover:bg-[#DCE7DC]/40"
+            className="flex items-center space-x-1 rounded-md border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
           >
-            <PenTool className="h-3 w-3 text-[#21473A]" />
-            <span>Content & Docs</span>
+            <PenTool className="h-3 w-3 text-[#0F766E]" />
+            <span>Content</span>
           </button>
           <button
             type="button"
             onClick={() => handleApplyPreset('video_editing')}
-            className="flex items-center space-x-1 rounded-md border border-[#21473A]/20 bg-white px-2.5 py-1 text-xs font-medium text-[#21473A] hover:bg-[#DCE7DC]/40"
+            className="flex items-center space-x-1 rounded-md border border-[#E2E8F0] bg-white px-2.5 py-1 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
           >
-            <Film className="h-3 w-3 text-[#21473A]" />
-            <span>Video & Motion</span>
+            <Film className="h-3 w-3 text-[#0F766E]" />
+            <span>Video</span>
           </button>
         </div>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-        {/* Section 1: Core Project Info */}
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs sm:p-6">
-          <h2 className="font-editorial text-lg font-bold text-[#21473A]">1. Project Identification</h2>
+        {/* Section 1: Project Details */}
+        <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+            1. Project Identification
+          </h2>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">
-                Project Name <span className="text-[#E9795C]">*</span>
+              <label className="block text-xs font-semibold text-[#1E293B]">
+                Project Name <span className="text-red-500">*</span>
               </label>
               <input
                 type="text"
-                placeholder="e.g. Fintech Customer Billing Portal"
+                placeholder="e.g. Client Billing & Analytics Portal"
                 value={formData.projectName}
                 onChange={(e) => setFormData({ ...formData, projectName: e.target.value })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
               />
               {errors.projectName && (
-                <p className="mt-1 text-xs text-[#E9795C]">{errors.projectName}</p>
+                <p className="mt-1 text-xs text-red-600">{errors.projectName}</p>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">
-                Client / Company Name <span className="text-xs text-[#1F2923]/50">(Optional)</span>
+              <label className="block text-xs font-semibold text-[#1E293B]">
+                Client / Company Name <span className="text-slate-400 font-normal">(Optional)</span>
               </label>
               <input
                 type="text"
                 placeholder="e.g. AeroPay Financial Corp"
                 value={formData.clientName}
                 onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
               />
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#1F2923]">Service Discipline</label>
+              <label className="block text-xs font-semibold text-[#1E293B]">Service Discipline</label>
               <div className="mt-1.5 grid grid-cols-2 gap-2 sm:grid-cols-6">
                 {[
                   { id: 'web_development', label: 'Web Dev' },
                   { id: 'ui_ux_design', label: 'UI/UX Design' },
                   { id: 'graphic_design', label: 'Graphic Design' },
-                  { id: 'content_writing', label: 'Content Writing' },
-                  { id: 'video_editing', label: 'Video Editing' },
-                  { id: 'other', label: 'Other Service' },
+                  { id: 'content_writing', label: 'Content' },
+                  { id: 'video_editing', label: 'Video' },
+                  { id: 'other', label: 'Other' },
                 ].map((item) => (
                   <button
                     key={item.id}
                     type="button"
                     onClick={() => setFormData({ ...formData, serviceType: item.id as ServiceType })}
-                    className={`rounded-md border px-2.5 py-2 text-xs font-medium text-center transition ${
+                    className={`rounded-md border py-2 text-xs font-medium text-center transition ${
                       formData.serviceType === item.id
-                        ? 'border-[#21473A] bg-[#21473A] text-white'
-                        : 'border-[#E5E0D5] bg-[#F7F5EF]/30 text-[#1F2923]/80 hover:bg-[#DCE7DC]/40'
+                        ? 'border-[#0F766E] bg-[#F0FDFA] text-[#0F766E] font-semibold'
+                        : 'border-[#E2E8F0] bg-white text-[#64748B] hover:bg-slate-50'
                     }`}
                   >
                     {item.label}
@@ -277,69 +271,73 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
           </div>
         </div>
 
-        {/* Section 2: The Brief */}
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs sm:p-6">
-          <h2 className="font-editorial text-lg font-bold text-[#21473A]">2. The Client's Request & Needs</h2>
+        {/* Section 2: Brief & Requirements */}
+        <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+            2. Client Request & Objectives
+          </h2>
           <div className="mt-4 space-y-4">
             <div>
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-semibold text-[#1F2923]">
-                  Client's Original Brief or Message <span className="text-[#E9795C]">*</span>
+                <label className="block text-xs font-semibold text-[#1E293B]">
+                  Client's Original Brief or Notes <span className="text-red-500">*</span>
                 </label>
-                <span className="text-[11px] text-[#1F2923]/60">Paste raw email, Slack, or brief notes</span>
+                <span className="text-[11px] text-[#64748B]">Paste raw email, chat, or project notes</span>
               </div>
               <textarea
-                rows={5}
+                rows={4}
                 placeholder="Paste what the client wrote or describe what they asked for in their own words..."
                 value={formData.clientBrief}
                 onChange={(e) => setFormData({ ...formData, clientBrief: e.target.value })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 p-3 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white p-3 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
               />
               {errors.clientBrief && (
-                <p className="mt-1 text-xs text-[#E9795C]">{errors.clientBrief}</p>
+                <p className="mt-1 text-xs text-red-600">{errors.clientBrief}</p>
               )}
             </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div>
-                <label className="block text-xs font-semibold text-[#1F2923]">
-                  Desired Outcome & Target Audience <span className="text-xs text-[#1F2923]/50">(Optional)</span>
+                <label className="block text-xs font-semibold text-[#1E293B]">
+                  Desired Outcome & Audience <span className="text-slate-400 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. 50% fewer invoice support tickets; target: SMB finance leads"
+                  placeholder="e.g. Sub-1s mobile load time; reduce support tickets"
                   value={formData.desiredOutcome}
                   onChange={(e) => setFormData({ ...formData, desiredOutcome: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                  className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#1F2923]">
-                  Expected Deliverables Mentions <span className="text-xs text-[#1F2923]/50">(Optional)</span>
+                <label className="block text-xs font-semibold text-[#1E293B]">
+                  Expected Deliverables Mentions <span className="text-slate-400 font-normal">(Optional)</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Next.js app, Stripe portal link, PDF invoice generator"
+                  placeholder="e.g. Next.js app, Stripe portal, PDF invoice generator"
                   value={formData.expectedDeliverables}
                   onChange={(e) => setFormData({ ...formData, expectedDeliverables: e.target.value })}
-                  className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                  className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
                 />
               </div>
             </div>
           </div>
         </div>
 
-        {/* Section 3: Commercial Terms & Pricing */}
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs sm:p-6">
-          <h2 className="font-editorial text-lg font-bold text-[#21473A]">3. Commercial Terms & Pricing Preferences</h2>
+        {/* Section 3: Pricing & Rates */}
+        <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
+          <h2 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+            3. Commercial Terms & Pricing
+          </h2>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Currency</label>
+              <label className="block text-xs font-semibold text-[#1E293B]">Currency</label>
               <select
                 value={formData.currency}
                 onChange={(e) => setFormData({ ...formData, currency: e.target.value as Currency })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
               >
                 <option value="USD">USD ($)</option>
                 <option value="EUR">EUR (€)</option>
@@ -349,15 +347,15 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Billing Mode</label>
-              <div className="mt-1 flex space-x-2">
+              <label className="block text-xs font-semibold text-[#1E293B]">Billing Mode</label>
+              <div className="mt-1.5 flex space-x-2">
                 <button
                   type="button"
                   onClick={() => setFormData({ ...formData, rateType: 'hourly' })}
                   className={`flex-1 rounded-md border py-2 text-xs font-medium ${
                     formData.rateType === 'hourly'
-                      ? 'border-[#21473A] bg-[#21473A] text-white'
-                      : 'border-[#E5E0D5] bg-[#F7F5EF]/30 text-[#1F2923]'
+                      ? 'border-[#0F766E] bg-[#F0FDFA] text-[#0F766E] font-semibold'
+                      : 'border-[#E2E8F0] bg-white text-[#64748B]'
                   }`}
                 >
                   Hourly Rate
@@ -367,8 +365,8 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
                   onClick={() => setFormData({ ...formData, rateType: 'fixed' })}
                   className={`flex-1 rounded-md border py-2 text-xs font-medium ${
                     formData.rateType === 'fixed'
-                      ? 'border-[#21473A] bg-[#21473A] text-white'
-                      : 'border-[#E5E0D5] bg-[#F7F5EF]/30 text-[#1F2923]'
+                      ? 'border-[#0F766E] bg-[#F0FDFA] text-[#0F766E] font-semibold'
+                      : 'border-[#E2E8F0] bg-white text-[#64748B]'
                   }`}
                 >
                   Fixed Fee
@@ -379,64 +377,64 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
             <div>
               {formData.rateType === 'hourly' ? (
                 <>
-                  <label className="block text-xs font-semibold text-[#1F2923]">
-                    Your Hourly Rate ({formData.currency}) <span className="text-[#E9795C]">*</span>
+                  <label className="block text-xs font-semibold text-[#1E293B]">
+                    Hourly Rate ({formData.currency}) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="number"
                     min="1"
                     value={formData.hourlyRate || ''}
                     onChange={(e) => setFormData({ ...formData, hourlyRate: Number(e.target.value) })}
-                    className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                    className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
                   />
-                  {errors.hourlyRate && <p className="mt-1 text-xs text-[#E9795C]">{errors.hourlyRate}</p>}
+                  {errors.hourlyRate && <p className="mt-1 text-xs text-red-600">{errors.hourlyRate}</p>}
                 </>
               ) : (
                 <>
-                  <label className="block text-xs font-semibold text-[#1F2923]">
-                    Target Fixed Budget ({formData.currency}) <span className="text-[#E9795C]">*</span>
+                  <label className="block text-xs font-semibold text-[#1E293B]">
+                    Target Fixed Budget ({formData.currency}) <span className="text-red-500">*</span>
                   </label>
                   <input
                     type="number"
                     min="1"
                     value={formData.fixedBudget || ''}
                     onChange={(e) => setFormData({ ...formData, fixedBudget: Number(e.target.value) })}
-                    className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                    className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
                   />
-                  {errors.fixedBudget && <p className="mt-1 text-xs text-[#E9795C]">{errors.fixedBudget}</p>}
+                  {errors.fixedBudget && <p className="mt-1 text-xs text-red-600">{errors.fixedBudget}</p>}
                 </>
               )}
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Estimated Available Hours</label>
+              <label className="block text-xs font-semibold text-[#1E293B]">Available Hours</label>
               <input
                 type="number"
                 min="1"
                 placeholder="e.g. 40"
                 value={formData.availableHours || ''}
                 onChange={(e) => setFormData({ ...formData, availableHours: Number(e.target.value) })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Target Timeline</label>
+              <label className="block text-xs font-semibold text-[#1E293B]">Target Timeline</label>
               <input
                 type="text"
                 placeholder="e.g. 4 to 6 weeks, or Nov 15"
                 value={formData.timeline}
                 onChange={(e) => setFormData({ ...formData, timeline: e.target.value })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">Included Revision Rounds</label>
+              <label className="block text-xs font-semibold text-[#1E293B]">Revision Rounds</label>
               <select
                 value={formData.revisionRounds}
                 onChange={(e) => setFormData({ ...formData, revisionRounds: Number(e.target.value) })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] focus:border-[#0F766E] focus:outline-none"
               >
                 <option value={1}>1 Consolidated Round</option>
                 <option value={2}>2 Consolidated Rounds (Standard)</option>
@@ -446,63 +444,55 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
           </div>
         </div>
 
-        {/* Section 4: Boundaries & Exclusions */}
-        <div className="rounded-xl border border-[#E5E0D5] bg-white p-5 shadow-2xs sm:p-6">
+        {/* Section 4: Exclusions & Boundaries */}
+        <div className="rounded-xl border border-[#E2E8F0] bg-white p-5 shadow-xs sm:p-6">
           <div className="flex items-center space-x-2">
-            <h2 className="font-editorial text-lg font-bold text-[#21473A]">
-              4. Known Constraints & Exclusions
+            <h2 className="text-sm font-bold uppercase tracking-wider text-[#1E293B]">
+              4. Known Exclusions & Constraints
             </h2>
-            <span className="rounded bg-[#E9795C]/15 px-2 py-0.5 text-[10px] font-bold text-[#E9795C]">
-              Crucial
+            <span className="rounded bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+              Crucial for scope defense
             </span>
           </div>
-          <p className="mt-1 text-xs text-[#1F2923]/70">
-            Tell ScopeMate what you will NOT do, so it can formulate explicit contractual exclusions.
+          <p className="mt-1 text-xs text-[#64748B]">
+            Specify work you will not perform, so ScopeMate can formulate explicit exclusions.
           </p>
 
           <div className="mt-3 space-y-4">
-            <div>
-              <textarea
-                rows={3}
-                placeholder="e.g. Backend DB migration is out of scope; client supplies all copy; no native iOS app; no translation into languages other than English."
-                value={formData.constraintsAndExclusions}
-                onChange={(e) => setFormData({ ...formData, constraintsAndExclusions: e.target.value })}
-                className="w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 p-3 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
-              />
-            </div>
+            <textarea
+              rows={3}
+              placeholder="e.g. Backend DB migrations out of scope; client provides all copy; no native iOS app; no translation into languages other than English."
+              value={formData.constraintsAndExclusions}
+              onChange={(e) => setFormData({ ...formData, constraintsAndExclusions: e.target.value })}
+              className="w-full rounded-md border border-[#E2E8F0] bg-white p-3 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
+            />
 
             <div>
-              <label className="block text-xs font-semibold text-[#1F2923]">
-                Additional Context or Risks <span className="text-xs text-[#1F2923]/50">(Optional)</span>
+              <label className="block text-xs font-semibold text-[#1E293B]">
+                Additional Context or Risks <span className="text-slate-400 font-normal">(Optional)</span>
               </label>
               <input
                 type="text"
-                placeholder="e.g. Client stakeholders change minds often; need firm milestone sign-offs."
+                placeholder="e.g. Client frequently changes requirements; need firm milestone sign-offs."
                 value={formData.additionalNotes}
                 onChange={(e) => setFormData({ ...formData, additionalNotes: e.target.value })}
-                className="mt-1 w-full rounded-md border border-[#E5E0D5] bg-[#F7F5EF]/40 px-3 py-2 text-sm text-[#1F2923] focus:border-[#21473A] focus:outline-none"
+                className="mt-1.5 w-full rounded-md border border-[#E2E8F0] bg-white px-3 py-2 text-xs text-[#1E293B] placeholder-slate-400 focus:border-[#0F766E] focus:outline-none"
               />
             </div>
           </div>
         </div>
 
-        {/* Submit action */}
-        <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-[#21473A]/20 bg-[#ECE7DC]/60 p-4 sm:flex-row sm:p-6">
-          <div>
-            <div className="flex items-center space-x-2 text-xs font-semibold text-[#21473A]">
-              <Sparkles className="h-4 w-4 text-[#E9795C]" />
-              <span>Gemma 4 (26B-A4B-IT) Open-Weight Inference</span>
-            </div>
-            <p className="mt-0.5 text-xs text-[#1F2923]/70">
-              Structures deliverables, formulates acceptance criteria, and generates line item estimates.
-            </p>
+        {/* Submit Bar */}
+        <div className="flex flex-col items-center justify-between gap-4 rounded-xl border border-[#E2E8F0] bg-white p-4 sm:flex-row sm:p-5">
+          <div className="text-xs text-[#64748B]">
+            Outputs structured deliverables, acceptance criteria, exclusions, and quote line items.
           </div>
 
           <div className="flex w-full items-center justify-end space-x-3 sm:w-auto">
             <button
               type="button"
               onClick={onLoadSample}
-              className="rounded-lg border border-[#21473A]/30 bg-white px-4 py-2.5 text-xs font-semibold text-[#21473A] hover:bg-[#DCE7DC]/40"
+              className="rounded-lg border border-[#E2E8F0] bg-white px-4 py-2 text-xs font-medium text-[#1E293B] hover:bg-slate-50"
             >
               Cancel & View Sample
             </button>
@@ -510,17 +500,17 @@ export const BriefBuilder: React.FC<BriefBuilderProps> = ({
             <button
               type="submit"
               disabled={isLoading}
-              className="flex items-center justify-center space-x-2 rounded-lg bg-[#21473A] px-6 py-2.5 text-sm font-semibold text-white shadow-xs transition hover:bg-[#18362C] disabled:opacity-50"
+              className="flex items-center justify-center space-x-2 rounded-lg bg-[#0F766E] px-5 py-2 text-xs font-semibold text-white shadow-xs transition hover:bg-[#115E59] disabled:opacity-50"
             >
               {isLoading ? (
                 <>
-                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                  <div className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-white border-t-transparent" />
                   <span>Synthesizing with Gemma 4...</span>
                 </>
               ) : (
                 <>
-                  <span>Generate Proposal & Scope</span>
-                  <ArrowRight className="h-4 w-4" />
+                  <span>Generate Proposal</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
                 </>
               )}
             </button>
