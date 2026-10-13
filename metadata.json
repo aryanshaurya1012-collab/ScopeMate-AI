@@ -2,5 +2,7 @@
   "name": "ScopeMate",
   "description": "Editorial-grade project scoping, proposal generation, quote calculation, and scope change analyzer for freelancers powered by open-weight Gemma 4.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
