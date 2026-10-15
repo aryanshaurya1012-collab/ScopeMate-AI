@@ -185,3 +185,5 @@ npm test
 ## 9. License
 
 Open source under the Apache 2.0 License.
+
+**All Rights Reserved**
